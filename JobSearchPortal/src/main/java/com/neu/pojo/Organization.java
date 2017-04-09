@@ -21,15 +21,6 @@ public class Organization {
 	@Column(name = "businessType")
 	private String businessType;
 	
-	public Organization() {
-
-	}
-	
-	public Organization(String orgName, String orgType) {
-		this.organizationName = orgName;
-		this.businessType = orgType;
-	}
-
 	public int getOrganizationID() {
 		return organizationID;
 	}
@@ -52,6 +43,15 @@ public class Organization {
 
 	public void setBusinessType(String businessType) {
 		this.businessType = businessType;
+	}
+	
+	public Organization() {
+
+	}
+	
+	public Organization(String orgName, String orgType) {
+		this.organizationName = orgName;
+		this.businessType = orgType;
 	}
 	
 	

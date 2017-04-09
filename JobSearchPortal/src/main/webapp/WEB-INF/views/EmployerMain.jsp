@@ -1,12 +1,12 @@
 <%-- 
-    Document   : AdminMain
-    Created on : Apr 4, 2017, 11:08:23 PM
+    Document   : EmployerMain
+    Created on : Apr 7, 2017, 11:08:23 PM
     Author     : Siddhant Chandiwal
 --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Admin Home Page</title>
+  <title>Employer Home Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -14,11 +14,11 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-<%@include file="AdminHeader.jsp" %>
+<%@include file="employerheader.jsp" %>
 <div class="container">
  	<div class="form-group">
- 	<h3>Hello Admin</h3>
-  		<h2>Welcome to the GetEmployed Job Search Portal</h2>
+ 	<h3>Hello Employer</h3>
+  		<h2>Welcome to the Online Job Search Portal</h2>
   		
   		
   	</div>

@@ -1,8 +1,11 @@
 package com.neu.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
+
 
 import com.neu.pojo.Admin;
 import com.neu.pojo.Candidate;
@@ -105,6 +108,16 @@ public class UserDAO extends DAO{
 		}
 
 		return null;
+
+	}
+	
+	public Candidate getCandidateID(String candidateID) {
+		// TODO Auto-generated method stub
+
+		Criteria criteria = getSession().createCriteria(Candidate.class);
+		criteria.add(Restrictions.eq("userId", Integer.parseInt(candidateID)));
+		Candidate candidate = (Candidate) criteria.uniqueResult();
+		return candidate;
 
 	}
 

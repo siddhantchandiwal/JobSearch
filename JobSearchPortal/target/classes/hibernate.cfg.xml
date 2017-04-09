@@ -17,5 +17,7 @@
 		<mapping class="com.neu.pojo.Admin" />
 		<mapping class="com.neu.pojo.Employer" />
 		<mapping class="com.neu.pojo.Candidate" />
+		<mapping class="com.neu.pojo.Organization" />
+		<mapping class="com.neu.pojo.Job" />
     </session-factory>
 </hibernate-configuration>

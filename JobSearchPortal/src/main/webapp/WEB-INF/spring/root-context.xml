@@ -6,6 +6,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="userDAO" class="com.neu.dao.UserDAO"></bean>
 	<bean id="orgDAO" class="com.neu.dao.OrgDAO"></bean>
+	<bean id="empDAO" class="com.neu.dao.EmpDAO"></bean>
+	<bean id="jobDAO" class="com.neu.dao.JobDAO"></bean>
+	
 	
 		
 </beans>
