@@ -85,6 +85,16 @@
     </div>
       <div>
       
+      <div>
+     <label class="col-sm-2">Email Id:</label>
+      <div class="col-sm-10">
+        <form:input type="text" id="emailid" path="emailId"/><form:errors path="emailId"/></font>
+      </div>
+    </div>
+      <div>
+      
+      
+      
      <label class="col-sm-2">User Type:</label>
      
       <div class="col-sm-10">

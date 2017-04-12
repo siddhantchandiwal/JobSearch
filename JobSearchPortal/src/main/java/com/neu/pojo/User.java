@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
@@ -17,6 +21,14 @@ public class User{
 	@GeneratedValue
 	@Column(name = "userId", unique = true, nullable = false)
 	private int userId;
+	
+	@Transient
+	private CommonsMultipartFile resume;   //for DataBinder to bind <input type="file".../>
+										  //will not be mapped for Hibernate as we store the file in the FileSystem
+										  //file will be placed into this field by DataBinder
+										  //file is in the memory. needs to be transferred to the FileSystem using java.io.file
+	@Column(name = "filename")
+	private String filename;  
 	
 	@Column(name = "userName")
 	private String userName;
@@ -60,12 +72,13 @@ public class User{
 	public User() {
 	}
 
-	public User(String firstName, String lastName, String userName, String password, String userType) {
+	public User(String firstName, String lastName, String userName, String password, String emailId, String userType) {
 
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
+		this.emailId = emailId;
 		this.userType = userType;
 
 	}
@@ -181,5 +194,23 @@ public class User{
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
+
+	public CommonsMultipartFile getResume() {
+		return resume;
+	}
+
+	public void setResume(CommonsMultipartFile resume) {
+		this.resume = resume;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+	
 
 }

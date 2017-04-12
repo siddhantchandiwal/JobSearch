@@ -43,9 +43,9 @@ public class Employer extends User{
 		
 	}
 
-	public Employer(String firstName, String lastName, String userName, String password, String userType) {
+	public Employer(String firstName, String lastName, String userName, String password,String emailId, String userType) {
 
-		super(firstName, lastName, userName, password, userType);
+		super(firstName, lastName, userName, password, emailId, userType);
 	}
 
 }

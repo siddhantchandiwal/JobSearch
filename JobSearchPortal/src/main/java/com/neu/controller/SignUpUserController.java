@@ -43,7 +43,7 @@ public class SignUpUserController {
 			System.out.println("Hello I am here");
 
 			if (checkIfUniqueExists) {
-				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(),	user.getUserType());
+				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());
 				return new ModelAndView("UserAdded", "user", "u");
 			}
 
@@ -91,16 +91,16 @@ public class SignUpUserController {
 			User enteredUser = userDao.validate(user.getUserName(), user.getPassword(), user.getUserType());
 			if (enteredUser != null) {
 				if (user.getUserType().equalsIgnoreCase("Employer")) {
-					Employer emplogged = (Employer) enteredUser;
-					session.setAttribute("loggedUser", emplogged);
+					Employer loggedUser = (Employer) enteredUser;
+					session.setAttribute("loggedUser", loggedUser);
 					return new ModelAndView("EmployerMain","emp page","user");
 				} else if (user.getUserType().equalsIgnoreCase("Candidate")) {
-					Candidate canlogged = (Candidate) enteredUser;
-					session.setAttribute("loggedUser", canlogged);
+					Candidate loggedUser = (Candidate) enteredUser;
+					session.setAttribute("loggedUser", loggedUser);
 					return new ModelAndView("CandidateMain","candidate","user");
 				} else if (user.getUserType().equalsIgnoreCase("Admin")) {
-					Admin adminlogged = (Admin) enteredUser;
-					session.setAttribute("loggedUser", adminlogged);
+					Admin loggedUser = (Admin) enteredUser;
+					session.setAttribute("loggedUser", loggedUser);
 					return new ModelAndView("AdminMain","admin","user");
 				}
 			} else

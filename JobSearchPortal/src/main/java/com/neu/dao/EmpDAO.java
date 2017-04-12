@@ -10,6 +10,8 @@ import com.neu.pojo.Organization;
 
 @Component
 public class EmpDAO extends DAO {
+	
+	
 
 	public void updateEmployerProfile(Employer employer) {
 		try {

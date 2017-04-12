@@ -8,7 +8,6 @@
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jobsearch</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">root</property>
-
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.show_sql">true</property>
@@ -19,5 +18,8 @@
 		<mapping class="com.neu.pojo.Candidate" />
 		<mapping class="com.neu.pojo.Organization" />
 		<mapping class="com.neu.pojo.Job" />
+		<mapping class="com.neu.pojo.AcademicProfile" />
+		<mapping class="com.neu.pojo.ProfessionalDetails" />
+		
     </session-factory>
 </hibernate-configuration>

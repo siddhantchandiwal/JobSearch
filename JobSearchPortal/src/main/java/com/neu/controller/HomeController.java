@@ -40,7 +40,7 @@ public class HomeController {
 	{
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "JobSearchMain";
+		return "Main";
 	}
 
 }
