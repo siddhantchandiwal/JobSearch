@@ -2,10 +2,13 @@ package com.neu.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.neu.dao.UserDAO;
+import com.neu.exception.UserException;
 import com.neu.pojo.Candidate;
 import com.neu.pojo.User;
 
@@ -34,46 +38,40 @@ public class FileUploadController {
 	
 
 	@RequestMapping(value = "/AddDocuments.htm", method = RequestMethod.GET)
-	public ModelAndView handleUploadIncoming() {
-	return new ModelAndView("AddDocuments","user",new User());
+	public ModelAndView handleUploadIncoming(HttpServletRequest request) {
+	Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+	System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+candidate.getUserId());
+	return new ModelAndView("AddDocuments");
 	}
 	
 	@RequestMapping(value = "/AddDocuments.htm", method = RequestMethod.POST)
-	public String handleUpload(@ModelAttribute("candidate") Candidate candidate, BindingResult result,@RequestParam CommonsMultipartFile[] fileUpload,HttpServletRequest hsr) {
-		
-		if (result.hasErrors()) {
-			hsr.setAttribute("candiadateFormHasError", "true");
-			return "AddDocuments";
-		}
-
+	public String handleUpload(@ModelAttribute("user") User user,HttpServletRequest request) {
 		try {
-
-			String resumeName = null;
-			byte[] resume = null;
-			 if (fileUpload != null && fileUpload.length > 0) {
-	    	        for (CommonsMultipartFile reumeFile : fileUpload){
-	    	              
-	    	            System.out.println("Saving file: " + reumeFile.getOriginalFilename());
-	    	             
-	    	            //Candidate uploadFile = new Candidate();
-	    	           
-	    	            resumeName = reumeFile.getOriginalFilename();
-	    	            resume = reumeFile.getBytes();
-	    	                           
-	    	        }
-	    	 }
-			
-
-			UserDAO userDAO = new UserDAO();
-			
-//			candidateDAO.create(candidate.getEmailID(), candidate.getPassword(), candidate.getConfirmPassword(), 
-//					candidate.getFirstName(), candidate.getLastName(), resumeName, resume);
-
-			// DAO.close();
-		} catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			// Multipart file will be in the memory.
+			// We need to transfer to a file
+			List<CommonsMultipartFile> photos = user.getDocument();
+			Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+			System.out.println("()))))))))))))))))))))))1111111)))))))))))))))))))))))))("+candidate.getUserName());
+			for (CommonsMultipartFile photo : photos) {
+				String fileName = photo.getOriginalFilename();
+				
+				System.out.println("File Name ***********" +fileName);
+				// could generate file names as well
+				userDAO.updateFile(candidate.getUserId(), fileName);
+				File localFile = new File("C:\\documents\\", fileName);
+				
+				// move the file from memory to the file
+				photo.transferTo(localFile);
+				
+				
+				
+			}
+		} catch (IllegalStateException e) {
+			System.out.println("*** IllegalStateException: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("*** IOException: " + e.getMessage());
 		}
-
+		System.out.println("Congratulations all your documents have been successfully saved in the database");
 		return "UploadSuccess";
 	}
 

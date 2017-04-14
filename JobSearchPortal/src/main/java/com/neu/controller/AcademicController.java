@@ -40,7 +40,7 @@ public class AcademicController {
 
 	}
 
-	@RequestMapping(value = "/EditAcademicDetails.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/EditEducationDetails.htm", method = RequestMethod.GET)
 	public ModelAndView editAcademicDetails(@RequestParam("adID") String academicDetailsID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -60,26 +60,31 @@ public class AcademicController {
 		}
 	}
 	
-	@RequestMapping(value = "/ViewAcadDetails.htm", method = RequestMethod.GET)
-	public ModelAndView viewAcademicDetails(HttpServletRequest request) {
+	
+	@RequestMapping(value = "/DeleteEducationDetails.htm", method = RequestMethod.GET)
+	public ModelAndView deleteEducationDetails(@RequestParam("adID") String academicDetailsID,
+			HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
 		if (candidate != null) {
+			AcademicProfile academicDetails = userDAO.getAcademicDetailsByID(academicDetailsID);
+			userDAO.deleteAcademicDetails(academicDetails);
 
-			List list = userDAO.getAcademicProfile(candidate);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("academicDetailsList", list);
-			mav.setViewName("ViewAcadDetails");
-			return mav;
+			List list = userDAO.getAcademicDetails(candidate);
+			// return list;
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("academicDetailsList", list);
+			mv.setViewName("ViewAcadDetails");
+			return mv;
 		} else {
 			ModelAndView mv = new ModelAndView();
+			// mv.addObject("academicDetailsList", list);
 			mv.setViewName("Main");
 			return mv;
 
 		}
 	}
-	
 	
 	@RequestMapping(value = "/EditAD.htm", method = RequestMethod.GET)
 	public String handlingCode3() {
@@ -113,13 +118,36 @@ public class AcademicController {
 
 	}
 	
+	@RequestMapping(value = "/ViewAcadDetails.htm", method = RequestMethod.GET)
+	public ModelAndView viewAcademicDetails(HttpServletRequest request) {
+
+		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+
+		if (candidate != null) {
+
+			List list = userDAO.getAcademicProfile(candidate);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("academicDetailsList", list);
+			mav.setViewName("ViewAcadDetails");
+			return mav;
+		} else {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("Main");
+			return mv;
+
+		}
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "/addMoreAcademicDetails.htm", method = RequestMethod.POST)
 	public String addAcademicDetails(@ModelAttribute("academicDetails") AcademicProfile academicProfile, BindingResult result, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
 		if (candidate != null) {
-			return "AcademicDetails";
+			return "AddEducation";
 		} else {
 			return "Main";
 		}

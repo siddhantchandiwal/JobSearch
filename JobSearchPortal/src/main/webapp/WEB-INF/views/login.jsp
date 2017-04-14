@@ -32,22 +32,7 @@
         <form:input type="password" class="form-control" id="password" path="password"/>
       </div>
     </div>
-       <div class="form-group">
-      
-     <label class="col-sm-2 control-label">User Type:</label>
-     
-      <div class="col-sm-10">
-      
-      <form:select class="form-control" id="sel1" path="userType">
-        <option>Candidate</option>
-        <option>Employer</option>
-        <option>Admin</option>
-        
-      </form:select>
-    
-      </div>
-      
-   </div><br/><br/>
+      <br/><br/>
    <div class="container">
   <div class="col-sm-2 control-label"></div>
        <div class= "col-sm-10" >  <input type="submit" class="btn btn-info" value="Submit">

@@ -1,5 +1,7 @@
 package com.neu.pojo;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,14 +24,33 @@ public class User{
 	@Column(name = "userId", unique = true, nullable = false)
 	private int userId;
 	
+	
 	@Transient
-	private CommonsMultipartFile resume;   //for DataBinder to bind <input type="file".../>
-										  //will not be mapped for Hibernate as we store the file in the FileSystem
-										  //file will be placed into this field by DataBinder
-										  //file is in the memory. needs to be transferred to the FileSystem using java.io.file
+	private List<CommonsMultipartFile> document;   //for DataBinder to bind <input type="file".../>
+	  //will not be mapped for Hibernate as we store the file in the FileSystem
+	  //file will be placed into this field by DataBinder
+	  //file is in the memory. needs to be transferred to the FileSystem using java.io.file
 	@Column(name = "filename")
 	private String filename;  
 	
+	
+	
+	public List<CommonsMultipartFile> getDocument() {
+		return document;
+	}
+
+	public void setDocument(List<CommonsMultipartFile> document) {
+		this.document = document;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	@Column(name = "userName")
 	private String userName;
 
@@ -195,21 +216,8 @@ public class User{
 		this.phone = phone;
 	}
 
-	public CommonsMultipartFile getResume() {
-		return resume;
-	}
+	
 
-	public void setResume(CommonsMultipartFile resume) {
-		this.resume = resume;
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
 	
 	
 

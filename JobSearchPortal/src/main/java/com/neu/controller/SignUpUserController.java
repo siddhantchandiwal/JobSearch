@@ -44,7 +44,8 @@ public class SignUpUserController {
 
 			if (checkIfUniqueExists) {
 				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());
-				return new ModelAndView("UserAdded", "user", "u");
+				UserDAO.sendMail(user, "Your Registration has been booked successfully");
+				return new ModelAndView("UserAdded", "user", user);
 			}
 
 		} catch (Exception e) {
@@ -58,11 +59,11 @@ public class SignUpUserController {
 	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.GET)
 	public ModelAndView profile(HttpServletRequest request) {
 
-		User user = (User) request.getSession().getAttribute("loggedUser");
+		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
-		if (user != null) {
+		if (candidate != null) {
 			ModelAndView mv = new ModelAndView();
-			mv.addObject("user", user);
+			mv.addObject("user", candidate);
 			mv.setViewName("UserProfile");
 			return mv;
 		} else {
@@ -73,11 +74,16 @@ public class SignUpUserController {
 	}
 	
 	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.POST)
-	public ModelAndView updateProfile(@ModelAttribute("user") User user, @RequestParam("ID") String userID, BindingResult result) {
-
-		System.out.println("User id:" + userID);
-		userDao.updatePersonalInfo(userID, user.getStreetLine1(), user.getStreetLine2(), user.getCity(), user.getState(), user.getCountry(), user.getEmailId(), user.getPhone(), user.getZipCode());
-		return new ModelAndView("Welcome","userprofile", "user");
+	public ModelAndView updateProfile(@ModelAttribute("user") User user, BindingResult result,HttpServletRequest request) {
+		
+		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+		System.out.println(candidate.getUserId());
+		System.out.println(request.getSession().getAttribute("streetLine1"));
+		System.out.println(user.getStreetLine1());
+		//System.out.println("Street Line1:**************" + user.getStreetLine1());
+		userDao.updatePersonalInfo(candidate.getUserId(), user.getStreetLine1(), user.getStreetLine2(), user.getCity(),
+				user.getState(), user.getCountry(), user.getEmailId(), user.getPhone(), user.getZipCode());
+		return new ModelAndView("Welcome","userprofile", user);
 	}
 	
 	@RequestMapping(value = "/login.htm", method = RequestMethod.POST)
@@ -88,23 +94,26 @@ public class SignUpUserController {
 
 		try {
 			System.out.print("test");
-			User enteredUser = userDao.validate(user.getUserName(), user.getPassword(), user.getUserType());
-			if (enteredUser != null) {
-				if (user.getUserType().equalsIgnoreCase("Employer")) {
-					Employer loggedUser = (Employer) enteredUser;
-					session.setAttribute("loggedUser", loggedUser);
-					return new ModelAndView("EmployerMain","emp page","user");
-				} else if (user.getUserType().equalsIgnoreCase("Candidate")) {
-					Candidate loggedUser = (Candidate) enteredUser;
-					session.setAttribute("loggedUser", loggedUser);
-					return new ModelAndView("CandidateMain","candidate","user");
-				} else if (user.getUserType().equalsIgnoreCase("Admin")) {
-					Admin loggedUser = (Admin) enteredUser;
-					session.setAttribute("loggedUser", loggedUser);
-					return new ModelAndView("AdminMain","admin","user");
-				}
-			} else
-				return new ModelAndView("InvalidUser","user","user");
+			User enteredUser = userDao.validate(user.getUserName(), user.getPassword());
+		
+			System.out.println("Entered user is " + enteredUser.getUserType());
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+enteredUser.getUserId());
+			
+			if (enteredUser.getUserType().equalsIgnoreCase("Employer")) {
+				Employer loggedUser = (Employer) enteredUser;
+				session.setAttribute("loggedUser", loggedUser);
+				return new ModelAndView("EmployerMain","emp page","user");
+			} 
+			else if (enteredUser.getUserType().equalsIgnoreCase("Candidate")) {
+				Candidate loggedUser = (Candidate) enteredUser;
+				session.setAttribute("loggedUser", loggedUser);
+				return new ModelAndView("CandidateMain","candidate",enteredUser);
+			} 
+			else if (enteredUser.getUserType().equalsIgnoreCase("Admin")) {
+				Admin loggedUser = (Admin) enteredUser;
+				session.setAttribute("loggedUser", loggedUser);
+				return new ModelAndView("AdminMain","admin","user");
+			}
 
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
@@ -114,9 +123,9 @@ public class SignUpUserController {
 	}
 	
 	@RequestMapping(value = "/login.htm", method = RequestMethod.GET)
-	protected String authenticateForm(@ModelAttribute("user") User user, BindingResult result) throws Exception {
+	protected ModelAndView authenticateForm(@ModelAttribute("user") User user, BindingResult result) throws Exception {
 
-		return "login";
+		return new ModelAndView("login","user",user);
 	}
 	
 	

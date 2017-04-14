@@ -23,8 +23,9 @@
 
 
 <form:form commandName="user" method="post" enctype="multipart/form-data">
-
-Select Resume: <input type="file" name="resume"/><br/>
+Select Document 1: <input type="file" name="document[0]"/><br/>
+Select Document 2: <input type="file" name="document[1]"/><br/>
+Select Document 3: <input type="file" name="document[2]"/><br/>
 <input type="submit" value="Upload Button"/>
 </form:form>
   		

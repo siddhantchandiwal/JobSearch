@@ -11,7 +11,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
-
-Welcome ${requestScope.user.fname}, your resume has been uploaded successfully.
+Congratulations all your documents have been successfully saved in the database
 </body>
 </html>

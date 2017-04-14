@@ -1,6 +1,6 @@
 <%-- 
     Document   : UserProfile
-    Created on : Apr 4, 2017, 11:08:23 PM
+    Created on : Apr 2, 2017, 06:08:09 PM
     Author     : Siddhant Chandiwal
 --%>
 
@@ -69,7 +69,7 @@
           
      <label class="col-sm-2 control-label">Address Street Line1:</label>
       <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="streetLine1" path="streetLine1"/>
+        <form:input type="text" class="form-control" id="streetLine1" name="streetLine1" path="streetLine1"/>
        
       </div>
      <label class="col-sm-2 control-label">Address Street Line2:</label>
