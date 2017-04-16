@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
     	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jobsearch1</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jobsearch2</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
@@ -18,8 +18,10 @@
 		<mapping class="com.neu.pojo.Candidate" />
 		<mapping class="com.neu.pojo.Organization" />
 		<mapping class="com.neu.pojo.Job" />
-		<mapping class="com.neu.pojo.AcademicProfile" />
-		<mapping class="com.neu.pojo.ProfessionalDetails" />
+		<mapping class="com.neu.pojo.Profile" />
+		<mapping class="com.neu.pojo.JobApp" />
+		<mapping class="com.neu.pojo.JobStatus" />
+		
 		
     </session-factory>
 </hibernate-configuration>

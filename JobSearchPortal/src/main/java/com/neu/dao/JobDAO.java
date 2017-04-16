@@ -7,9 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-
-import com.neu.exception.UserException;
+import com.neu.pojo.Candidate;
 import com.neu.pojo.Job;
+import com.neu.pojo.JobApp;
+import com.neu.pojo.JobStatus;
 import com.neu.pojo.Organization;
 
 public class JobDAO extends DAO{
@@ -34,6 +35,54 @@ public class JobDAO extends DAO{
 		return jobList;
 
 	}
+	
+	
+	
+	
+	public int checkApplicationExists(Candidate candidate, String jobID) {
+		// TODO Auto-generated method stub
+
+		// organization = employer.getOrganization();
+		Criteria criteria = getSession().createCriteria(JobApp.class);
+		Criteria jobCriteria = criteria.createCriteria("job");
+		Criteria candidateCriteria = criteria.createCriteria("candidate");
+		jobCriteria.add(Restrictions.eq("jobID", Integer.parseInt(jobID)));
+		candidateCriteria.add(Restrictions.eq("userId", candidate.getUserId()));
+
+		JobApp jobApp = (JobApp) criteria.uniqueResult();
+
+		if (jobApp != null)
+			return jobApp.getJobApplicationID();
+		else
+			return 0;
+
+	}
+	
+	public void addJobApp(String jobID, Candidate candidate) {
+		try {
+			Job job = getJobByID(jobID);
+			begin();
+
+			JobApp jobApp = new JobApp(job, candidate);
+			jobApp.setCurrentJobStatus("New");
+
+			JobStatus jobStatus = new JobStatus();
+			jobStatus.setStatus("New");
+
+			jobApp.getJobStatus().add(jobStatus);
+			getSession().save(jobApp);
+			jobStatus.setJobApp(jobApp);
+
+			getSession().save(jobStatus);
+			commit();
+			close();
+			return;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			rollback();
+		}
+	}
+	
 	
 	
 	public void create(Job job, Organization org) {
@@ -61,7 +110,7 @@ public class JobDAO extends DAO{
 		try {
 			begin();
 			Query q = getSession().createQuery("from Job where jobID = :jobid");
-			q.setInteger("jid", jobid);
+			q.setInteger("jobid", jobid);
 			Job job = (Job) q.uniqueResult();
 			commit();
 			close();

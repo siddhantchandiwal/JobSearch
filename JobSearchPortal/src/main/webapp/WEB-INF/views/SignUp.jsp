@@ -52,8 +52,7 @@
   <div class="col-sm-2"></div>
       <div class="col-sm-10">
        <h3>  Sign Up Page </h3>
-       <c:out value="${contextPath}" /> 
-      </div>
+        </div>
   <form:form action="${contextPath}/SignUp.htm" commandName="user" method="post" class="form-horizontal" >
   
   <div>

@@ -58,6 +58,34 @@ public class CandidateController {
 		}
 	}
 	
+	@RequestMapping(value="/JobApply.htm", method = RequestMethod.GET)
+	public ModelAndView jobApply(@RequestParam("jobID") String jobID, HttpServletRequest req){
+		
+		Candidate candidate = (Candidate) req.getSession().getAttribute("loggedUser");
+		
+		if(candidate!=null){
+			int appID = jobDAO.checkApplicationExists(candidate, jobID);
+			
+			if(appID!=0){
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("jobApplicationID", appID);
+				mav.setViewName("JobAlreadyApplied");
+				return mav;
+			}else{
+				jobDAO.addJobApp(jobID, candidate);
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("jobID", jobID);
+				mav.setViewName("JobApplied");
+				//UserDAO.sendMail(jobId, "Your Registration has been booked successfully");
+				return mav;
+			}
+		} else {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("Main");
+			return mv;
+		}
+	}
+	
 	@RequestMapping(value = "/ViewJobs.htm", method = RequestMethod.POST)
 	public ModelAndView submitForm(@RequestParam("jobTitle") String jobTitle,@RequestParam("jobLocationCity") String jobLocationCity, HttpServletRequest request) {
 
@@ -78,5 +106,7 @@ public class CandidateController {
 
 		}
 	}
+	
+	
 
 }

@@ -40,7 +40,7 @@ public class SignUpUserController {
 
 		try {
 			boolean checkIfUniqueExists = userDao.checkIfUniqueUserNameExist(user.getUserName());
-			System.out.println("Hello I am here");
+			//System.out.println("Hello I am here");
 
 			if (checkIfUniqueExists) {
 				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());

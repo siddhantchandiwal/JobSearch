@@ -11,7 +11,7 @@
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-
+<%@include file="CandidateHeader.jsp" %>
 
  <c:choose>
             <c:when test="${empty requestScope.jobList}">
@@ -42,8 +42,9 @@
                         <td>${job.jobTitle}</td>
                         <td>${job.jobDescription}</td>
                         <td>${job.jobLocationCity}</td>
+                        
 						
-						<td><a href="ApplyJob.htm?jobID=${job.jobID}">Quick Apply</a> </td>
+						<td><a href="JobApply.htm?jobID=${job.jobID}">Quick Apply</a> </td>
                         </tr>
                        
                         </c:forEach>

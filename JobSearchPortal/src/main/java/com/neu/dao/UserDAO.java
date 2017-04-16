@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 
 import com.neu.exception.UserException;
-import com.neu.pojo.AcademicProfile;
+import com.neu.pojo.Profile;
 import com.neu.pojo.Admin;
 import com.neu.pojo.Candidate;
 import com.neu.pojo.Employer;
@@ -92,13 +92,13 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void deleteAcademicDetails(AcademicProfile academicDetails) {
+	public void deleteProfileDetails(Profile profileDetails) {
 		// TODO Auto-generated method stub
 
 		try {
 			begin();
 
-			getSession().delete(academicDetails);
+			getSession().delete(profileDetails);
 			commit();
 			close();
 
@@ -150,16 +150,16 @@ public class UserDAO extends DAO{
 		}
 	}
 	
-	public void addAcademicDetails(AcademicProfile academicDetails, Candidate candidate) {
+	public void addProfileDetails(Profile profileDetails, Candidate candidate) {
 		// TODO Auto-generated method stub
 
 		try {
 			begin();
 			// System.out.println("inside DAO");
 
-			academicDetails.setCandidate(candidate);
-			candidate.getAcademicProfile().add(academicDetails);
-			getSession().save(academicDetails);
+			profileDetails.setCandidate(candidate);
+			candidate.getProfile().add(profileDetails);
+			getSession().save(profileDetails);
 			commit();
 			close();
 			return;
@@ -172,8 +172,9 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void editAcademicDetails(int academicDetailsID, String educationLevel, String major, double gpa, int startYear, int expYearOfGraduation, 
-			String universityName, String universityAddress) {
+	public void editProfileDetails(int profileDetailsID, String educationLevel, String major, double gpa, int startYear, int expYearOfGraduation, 
+			String universityName, String universityAddress, String companyName, String companyType, String jobTitle, String annualStartPay, String annualEndPay, 
+			String companyCity, String companyState, String companyCountry, String companyZipCode) {
 		// TODO Auto-generated method stub
 
 		try {
@@ -181,20 +182,29 @@ public class UserDAO extends DAO{
 			begin();
 			Query query = getSession().createQuery("from AcademicProfile academicprofile where academicprofile.academicDetailsID = :academicDetailsID");
 
-			query.setInteger("academicDetailsID", academicDetailsID);
+			query.setInteger("academicDetailsID", profileDetailsID);
 
-			AcademicProfile databasePD = (AcademicProfile) query.uniqueResult();
-			databasePD.setEducationLevel(educationLevel);
-			databasePD.setMajor(major);
-			databasePD.setGpa(gpa);
-			databasePD.setStartYear(startYear);
-			databasePD.setExpYearOfGraduation(expYearOfGraduation);
-			databasePD.setUniversityName(universityName);
-			databasePD.setUniversityAddress(universityAddress);
+			Profile p = (Profile) query.uniqueResult();
+			p.setEducationLevel(educationLevel);
+			p.setMajor(major);
+			p.setGpa(gpa);
+			p.setStartYear(startYear);
+			p.setExpYearOfGraduation(expYearOfGraduation);
+			p.setUniversityName(universityName);
+			p.setUniversityAddress(universityAddress);
+			p.setCompanyName(companyName);
+			p.setCompanyType(companyType);
+			p.setJobTitle(jobTitle);
+			p.setAnnualStartPay(annualStartPay);
+			p.setAnnualEndPay(annualEndPay);
+			p.setCompanyCity(companyCity);
+			p.setCompanyState(companyState);
+			p.setCompanyCountry(companyCountry);
+			p.setCompanyZipCode(companyZipCode);
 			
 
 		//	System.out.println("inside DAO");
-			getSession().update(databasePD);
+			getSession().update(p);
 			commit();
 			close();
 			return;
@@ -207,13 +217,13 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public List<AcademicProfile> getAcademicDetails(Candidate candidate) {
+	public List<Profile> getProfileDetails(Candidate candidate) {
 		try {
 
 			begin();
 			Query query = getSession().createQuery("from AcademicProfile where candidate = :candidateID");
 			query.setInteger("candidateID", candidate.getUserId());
-			List<AcademicProfile> academicDetailsList = query.list();
+			List<Profile> academicDetailsList = query.list();
 
 			commit();
 			close();
@@ -227,17 +237,17 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public AcademicProfile getAcademicDetailsByID(String academicDetailsID) {
+	public Profile getProfileDetailsByID(String profileDetailsID) {
 		// TODO Auto-generated method stub
 
 		try {
 			begin();
-			Query query = getSession().createQuery("from AcademicProfile academicprofile where academicprofile.academicDetailsID = :academicDetailsID");
+			Query query = getSession().createQuery("from Profile academicprofile where academicprofile.profileID = :profileID");
 
-			query.setInteger("academicDetailsID", Integer.parseInt(academicDetailsID));
+			query.setInteger("profileDetailsID", Integer.parseInt(profileDetailsID));
 
-			AcademicProfile academicprofile = (AcademicProfile) query.uniqueResult();
-			return academicprofile;
+			Profile profile = (Profile) query.uniqueResult();
+			return profile;
 
 		} catch (HibernateException e) {
 			System.out.println("Error catched");
@@ -248,17 +258,17 @@ public class UserDAO extends DAO{
 	}
 	
 	
-	public List<AcademicProfile> getAcademicProfile(Candidate candidate) {
+	public List<Profile> getProfile(Candidate candidate) {
 		try {
 
 			begin();
-			Query query = getSession().createQuery("from AcademicProfile where candidate = :candidateID");
+			Query query = getSession().createQuery("from Profile where candidate = :candidateID");
 			query.setInteger("candidateID", candidate.getUserId());
-			List<AcademicProfile> academicprofileList = query.list();
+			List<Profile> profileList = query.list();
 
 			commit();
 			close();
-			return academicprofileList;
+			return profileList;
 
 		} catch (HibernateException e) {
 			rollback();
@@ -331,10 +341,11 @@ public class UserDAO extends DAO{
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			rollback();
-
 		}
-
 	}
+	
+	
+
 	
 	public void updateFile(int userID, String fileName){
 		try{

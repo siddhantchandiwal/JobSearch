@@ -14,7 +14,7 @@
 	<bean id="orgDAO" class="com.neu.dao.OrgDAO"></bean>
 	<bean id="empDAO" class="com.neu.dao.EmpDAO"></bean>
 	<bean id="jobDAO" class="com.neu.dao.JobDAO"></bean>
-	<bean id="academicValidator" class="com.neu.validator.AcademicValidator"></bean>
+	<bean id="profileValidator" class="com.neu.validator.ProfileValidator"></bean>
 	
 	
 		

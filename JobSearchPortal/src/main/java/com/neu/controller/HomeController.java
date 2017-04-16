@@ -28,11 +28,11 @@ public class HomeController {
 		return "Main";
 	}
 	
-	@RequestMapping(value = "/AddEducation.htm", method = RequestMethod.GET)
-	public String academicDetails(Locale locale, Model model) {
-
-		return "AddEducation";
-	}
+//	@RequestMapping(value = "/AddEducation.htm", method = RequestMethod.GET)
+//	public String academicDetails(Locale locale, Model model) {
+//
+//		return "AddEducation";
+//	}
 	
 	@RequestMapping(value="/Logout.htm", method=RequestMethod.GET)
 	public String logout(HttpServletRequest request)

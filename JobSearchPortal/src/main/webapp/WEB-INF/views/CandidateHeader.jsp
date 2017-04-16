@@ -28,8 +28,8 @@
           <ul class="dropdown-menu">
             <li><a href="UserProfile.htm">Personal Information</a></li>
             <li><a href="AddDocuments.htm">Add Supporting Documents</a></li>
-            <li><a href="ViewAcadDetails.htm">Academic Details</a></li>
-            <li><a href="ProfessionalDetails.htm">Professional Details</a></li>
+            <li><a href="ViewProfDetails.htm">Education and Work Experience Details</a></li>
+            <li><a href="OtherDetails.htm">Other Details</a></li>
             
           </ul>
         </li>
