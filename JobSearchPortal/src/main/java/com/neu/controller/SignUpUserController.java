@@ -36,13 +36,14 @@ public class SignUpUserController {
 	
 	
 	@RequestMapping(value = "/SignUp.htm", method = RequestMethod.POST)
-	protected ModelAndView doSubmitAction(@ModelAttribute("user") User user, BindingResult result) throws Exception {
+	protected ModelAndView signUpUser(@ModelAttribute("user") User user, BindingResult result) throws Exception {
 
 		try {
 			boolean checkIfUniqueExists = userDao.checkIfUniqueUserNameExist(user.getUserName());
+			boolean checkIfUniqueEmail = userDao.checkIfUniqueEmail(user.getEmailId());
 			//System.out.println("Hello I am here");
 
-			if (checkIfUniqueExists) {
+			if ((checkIfUniqueExists) && (checkIfUniqueEmail)) {
 				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());
 				UserDAO.sendMail(user, "Your Registration has been booked successfully");
 				return new ModelAndView("UserAdded", "user", user);
@@ -52,7 +53,7 @@ public class SignUpUserController {
 			System.out.println("Exception: " + e.getMessage());
 		}
 
-		return new ModelAndView("UserAlreadyExists","errormessage", "error while signup");
+		return new ModelAndView("SignUp","errormessage", "error while signup");
 
 	}
 	
@@ -74,7 +75,7 @@ public class SignUpUserController {
 	}
 	
 	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.POST)
-	public ModelAndView updateProfile(@ModelAttribute("user") User user, BindingResult result,HttpServletRequest request) {
+	public ModelAndView updateUserProfile(@ModelAttribute("user") User user, BindingResult result,HttpServletRequest request) {
 		
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 		System.out.println(candidate.getUserId());
@@ -83,7 +84,7 @@ public class SignUpUserController {
 		//System.out.println("Street Line1:**************" + user.getStreetLine1());
 		userDao.updatePersonalInfo(candidate.getUserId(), user.getStreetLine1(), user.getStreetLine2(), user.getCity(),
 				user.getState(), user.getCountry(), user.getEmailId(), user.getPhone(), user.getZipCode());
-		return new ModelAndView("Welcome","userprofile", user);
+		return new ModelAndView("UserProfile","userprofile", "Details saved Successfully");
 	}
 	
 	@RequestMapping(value = "/login.htm", method = RequestMethod.POST)
@@ -118,8 +119,8 @@ public class SignUpUserController {
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
-
-		return new ModelAndView("InvalidUser","user","user");
+		
+		return new ModelAndView("login","loginFailed","UserName and Password does not Match");
 	}
 	
 	@RequestMapping(value = "/login.htm", method = RequestMethod.GET)

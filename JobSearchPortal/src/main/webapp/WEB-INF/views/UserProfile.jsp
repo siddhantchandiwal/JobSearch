@@ -1,130 +1,202 @@
 <%-- 
-    Document   : UserProfile
-    Created on : Apr 2, 2017, 06:08:09 PM
+    Document   : User Profile Page
+    Created on : Apr 12, 2017, 06:08:09 PM
     Author     : Siddhant Chandiwal
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Online Job Search Profile Page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+<title>Online Job Search Profile Page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Online Job Search Portal</title>
+
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/signup.css" />">
+
+<script type="text/javascript">
+	function validate() {
+		
+		var flag = '';
+		var errmsg="";
+		letter = /^[A-Za-z]*$/;
+		emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})*$/;
+		
+		var firstName = document.getElementById("firstName").value;
+		var lastName = document.getElementById("lastName").value;	
+		var email = document.getElementById("emailId").value;
+		var contactNumber=document.getElementById("phone").value;
+		
+		if (!letter.test(firstName)) {
+			errmsg="*First Name must have valid alphabet characters";  
+			flag = false;
+		}else if (!letter.test(lastName)) {
+			errmsg="*Last Name must have valid alphabet characters";  			
+			flag = false;
+		}else if (!emailformat.test(email)) {
+			errmsg="*Please enter valid Email in the Generic Format";  			
+			flag = false;
+		}else if (firstName == ""|| firstName==null) {
+			errmsg = "*First Name cannot be kept blank";
+			flag = false;
+		}else if (lastName == ""|| lastName==null) {
+			errmsg = "*Last Name cannot be kept blank";
+			flag = false;
+		}else if(contactNumber == "" || contactNumber==null){
+			errmsg = "* Phone number cannot be kept blank";
+			flag = false;
+		}else if(contactNumber<7000000000 || contactNumber>9999999999){
+			errmsg = "* Please enter a valid Phone Number";
+			flag = false;
+		}else{
+			errmsg=true;
+		}
+			document.getElementById("Error").innerHTML = errmsg;
+		
+		return flag;
+	}
+</script>
+
+
 </head>
-<body>
+<body ng-controller="myCTRL">
+	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+	<%@include file="CandidateHeader.jsp"%>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<%@include file="CandidateHeader.jsp" %>
-  		<h2>User Profile Page</h2>
-  		
-  		
-  <div class="container">
-  
-  
-  
-  
-  <form:form action="${contextPath}/UserProfile.htm" commandName="user" method="post" class="form-horizontal" >
-   <div class="form-group">
-	<input type="hidden" name="ID" value="${user.userId}"/>      
-     <div class="col-sm-2 control-label"></div>
-      <div class="col-sm-10">
-       <h3>  Please enter your profile information: </h3>
-      </div>
-  
-  </div>
-    <div class="form-group">
-      
-     <label class="col-sm-2 control-label">First Name:</label>
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="firstName" path="firstName"/>
-        
-      </div>
-     </div>
-      <div class="form-group">
-     <label class="col-sm-2 control-label">Last Name:</label>
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="lastName" path="lastName"/>
-       
-      </div>
-    </div>
-      <div class="form-group">
-     <label class="col-sm-2 control-label">Email address:</label>
-      <div class="col-sm-10">
-        <form:input type="email" class="form-control" id="emailId" path="emailId"/>
-       
-      </div>
-    </div>
-    
-    <div class="form-group">
-     <label class="col-sm-2 control-label"><h4>ADDRESS</h4></label>
-      <div class="col-sm-10">
-        
-      </div>
-      </div>
-    
-      <div class="form-group">
-          
-     <label class="col-sm-2 control-label">Address Street Line1:</label>
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="streetLine1" name="streetLine1" path="streetLine1"/>
-       
-      </div>
-     <label class="col-sm-2 control-label">Address Street Line2:</label>
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="streetLine2" path="streetLine2"/>
-      </div>
-      <label class="col-sm-2 control-label">City:</label>
-      
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="city" path="city"/>
-       
-      </div>
-      
-      <label class="col-sm-2 control-label">State:</label>
-      
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="state" path="state"/>
-       
-      </div>
-      
-      <label class="col-sm-2 control-label">Country:</label>
-      
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="country" path="country"/>
-       
-      </div>
-      <label class="col-sm-2 control-label">Zip Code</label>
-      <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="zipcode" path="zipCode"/> 
-      
-      </div>
-    
-    
 
-    <label class="col-sm-2 control-label">Phone Number</label>
-    <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="phone" path="phone"/>
-       
-      </div>
-    
-    </div>
-    
-      
-      <div class="container">
-          <input type="submit" class="btn btn-info" value="Submit">
-          <input type="reset" class="btn btn-info" value="Refresh">
-          
-      </div>
-      
-  </form:form>
-</div>
-  
-  		
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 col-md-12">
+				<div class="row">
 
- 
+					<form:form action="${contextPath}/UserProfile.htm"
+						commandName="user" method="post" class="form-horizontal"
+						role="form" onsubmit="return validate()">
 
+
+						<h3 align="center">User Profile</h3>
+						<div class="form-group">
+							<input type="hidden" name="ID" value="${user.userId}" /> <label
+								for="firstName" class="col-sm-3 control-label">First
+								Name</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="firstName" placeholder="First Name"
+									path="firstName" class="form-control" />
+								<form:errors path="firstName" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="firstName" class="col-sm-3 control-label">Last
+								Name</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="lastName" placeholder="Last Name"
+									path="lastName" class="form-control" />
+								<form:errors path="lastName" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+
+
+
+						<div class="form-group">
+							<label for="emailId" class="col-sm-3 control-label">Email</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="emailId" placeholder="Email Id"
+									path="emailId" class="form-control" />
+								<form:errors path="emailId" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="emailId" class="col-sm-3 control-label"><h4>
+									<b>Address</b>
+								</h4></label>
+						</div>
+
+						<div class="form-group">
+							<label for="streetLine1" class="col-sm-3 control-label">Street
+								Line 1</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="streetLine1"
+									placeholder="Address Street Line 1" path="streetLine1"
+									class="form-control" />
+								<form:errors path="streetLine1" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="streetLine2" class="col-sm-3 control-label">Street
+								Line 2</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="streetLine2"
+									placeholder="Address Street Line 2" path="streetLine2"
+									class="form-control" />
+								<form:errors path="streetLine2" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="city" class="col-sm-3 control-label">City</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="city" placeholder="City" path="city"
+									class="form-control" />
+								<form:errors path="city" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="state" class="col-sm-3 control-label">State</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="state" placeholder="State"
+									path="state" class="form-control" />
+								<form:errors path="state" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="country" class="col-sm-3 control-label">Country</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="country" placeholder="Country"
+									path="country" class="form-control" />
+								<form:errors path="country" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="phone" class="col-sm-3 control-label">Phone
+								Number</label>
+							<div class="col-sm-9">
+								<form:input type="text" id="phone" placeholder="Phone Number"
+									path="phone" class="form-control" />
+								<form:errors path="phone" cssStyle="color:#ff0000"></form:errors>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-sm-9 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary btn-block">Submit</button>
+
+							</div>
+						</div>
+
+						<p>
+							<label id="Error" style="color: red;"></label>
+						</p>
+
+
+					</form:form>
+				</div>
+				<!-- /form -->
+			</div>
 </body>
 </html>

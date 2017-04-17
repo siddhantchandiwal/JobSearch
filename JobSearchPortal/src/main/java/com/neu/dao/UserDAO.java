@@ -40,25 +40,16 @@ public class UserDAO extends DAO{
 		   String name = fname.concat(lname);
 			Email email = new Email();
 
-			email.setFromAddress("Coalition Job Search Portal", "donotreply.coalition@gmail.com");
+			email.setFromAddress("Online Job Search Portal", "donotreply.coalition@gmail.com");
 			email.setSubject("Welcome Letter!");
 
 			email.addRecipient(name,user.getEmailId(), Message.RecipientType.TO);
 			StringBuffer sb=new StringBuffer();
-			sb.append("Hello Aadesh Randeria,");
+			sb.append("Hello User,");
 			sb.append("\n");
 			sb.append("\n");
-			sb.append("Thank you for taking out time and your interest in Coalition");
-			sb.append("\n");
-			sb.append("On the basis of the assessment, our Recruiting team is impressed and we would like to move ahead with further hiring process ");
-			sb.append("\n");
-			sb.append("We would like to have a Skype video call with you. Please provide your availability for the next 2 days");
-			sb.append("\n");
-			sb.append("\n");
-			sb.append("Thank you again for your interest in Coalition");
-			sb.append("\n");
-			sb.append("\n");
-			sb.append("- Coalition Recruitment Team");
+			sb.append("Thank you for taking out time and your interest in Online Job Search Portal");
+			
 			sb.append("\n");
 			
 			System.out.println("user id"+user.getEmailId());
@@ -71,7 +62,7 @@ public class UserDAO extends DAO{
 	
 	
 	
-	public User validate(String userName, String password) {
+	public User validate(String userName, String password) throws UserException {
 		try {
 			begin();
 			Query query = getSession().createQuery(
@@ -82,13 +73,14 @@ public class UserDAO extends DAO{
 			
 
 			User user = (User) query.uniqueResult();
+			commit();
+			close();
 			return user;
 
 		} catch (HibernateException e) {
-			System.out.println("Error occured");
+			rollback();
+			throw new UserException("Could not get user " + userName, e);
 		}
-
-		return null;
 
 	}
 	
@@ -291,12 +283,34 @@ public class UserDAO extends DAO{
 				return false;
 
 		} catch (HibernateException e) {
-			System.out.println("Error occured");
+			//System.out.println("Error occured");
 		}
 
 		return false;
 
 	}
+
+	public boolean checkIfUniqueEmail(String emailId){
+		try{
+			begin();
+			System.out.println("Inside email unique part********************");
+			Query query = getSession().createQuery("from User u where u.emailId like :emailId");
+			
+			query.setString("emailId", emailId);
+			User user = (User) query.uniqueResult();
+			System.out.println("Query is executed now/////////////////////////////////////////");
+			if(user == null)
+				return true;
+			else
+				return false;
+		}catch (HibernateException e){
+			//System.out.println("Error occured");
+		}
+		return false;
+	}
+	
+	
+	
 	
 	public void updatePersonalInfo(User user) {
 		// TODO Auto-generated method stub
