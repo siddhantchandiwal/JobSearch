@@ -30,7 +30,7 @@
 				
 				
 				
-		<h2 >Welcome ${user.firstName} to Online Job Search Portal</h2><br>
+		<h2 >Welcome ${candidate} to Online Job Search Portal</h2><br>
   		<p class="col-sm-9 control-label">Find jobs using this Portal, the most comprehensive search engine for jobs</p>
   		<p class="col-sm-9 control-label">In a single search, it offers free access to millions of jobs from thousands of companies </p>
   		<p class="col-sm-9 control-label">From search to apply, this Job Search Portal helps you through the entire process of finding a Great and Successful job.</p>

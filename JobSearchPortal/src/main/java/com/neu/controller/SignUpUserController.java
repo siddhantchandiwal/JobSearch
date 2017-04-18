@@ -108,7 +108,8 @@ public class SignUpUserController {
 			else if (enteredUser.getUserType().equalsIgnoreCase("Candidate")) {
 				Candidate loggedUser = (Candidate) enteredUser;
 				session.setAttribute("loggedUser", loggedUser);
-				return new ModelAndView("CandidateMain","candidate",enteredUser);
+				System.out.println("*************************"+loggedUser.getFirstName());
+				return new ModelAndView("CandidateMain","candidate",enteredUser.getFirstName());
 			} 
 			else if (enteredUser.getUserType().equalsIgnoreCase("Admin")) {
 				Admin loggedUser = (Admin) enteredUser;

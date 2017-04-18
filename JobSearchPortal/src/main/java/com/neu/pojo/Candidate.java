@@ -22,8 +22,6 @@ public class Candidate extends User{
 
 	}
 	
-
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
 	private Set<Profile> profile = new HashSet<Profile>();
 

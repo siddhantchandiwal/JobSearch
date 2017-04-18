@@ -172,9 +172,9 @@ public class UserDAO extends DAO{
 		try {
 
 			begin();
-			Query query = getSession().createQuery("from AcademicProfile academicprofile where academicprofile.academicDetailsID = :academicDetailsID");
+			Query query = getSession().createQuery("from Profile academicprofile where academicprofile.profileID = :profileID");
 
-			query.setInteger("academicDetailsID", profileDetailsID);
+			query.setInteger("profileID", profileDetailsID);
 
 			Profile p = (Profile) query.uniqueResult();
 			p.setEducationLevel(educationLevel);
@@ -213,7 +213,7 @@ public class UserDAO extends DAO{
 		try {
 
 			begin();
-			Query query = getSession().createQuery("from AcademicProfile where candidate = :candidateID");
+			Query query = getSession().createQuery("from Profile where candidate = :candidateID");
 			query.setInteger("candidateID", candidate.getUserId());
 			List<Profile> academicDetailsList = query.list();
 

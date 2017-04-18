@@ -179,13 +179,13 @@ public class ProfileController {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 		if (candidate != null) {
-			//profileValidator.validate(profileDetails, result);
-//			if (result.hasErrors()) {
-//				ModelAndView mv = new ModelAndView();
-//				mv.addObject("profileDetails", profileDetails);
-//				mv.setViewName("AddProfile");
-//				return mv;
-//			}
+			profileValidator.validate(profileDetails, result);
+			if (result.hasErrors()) {
+				ModelAndView mv = new ModelAndView();
+				mv.addObject("profileDetails", profileDetails);
+				mv.setViewName("AddProfile");
+				return mv;
+			}
 			
 			userDAO.addProfileDetails(profileDetails, candidate);
 

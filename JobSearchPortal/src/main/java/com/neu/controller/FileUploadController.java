@@ -51,14 +51,15 @@ public class FileUploadController {
 			// We need to transfer to a file
 			List<CommonsMultipartFile> photos = user.getDocument();
 			Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
-			System.out.println("()))))))))))))))))))))))1111111)))))))))))))))))))))))))("+candidate.getUserName());
+			
 			for (CommonsMultipartFile photo : photos) {
 				String fileName = photo.getOriginalFilename();
+				String newFileName = fileName + candidate.getUserId();
 				
-				System.out.println("File Name ***********" +fileName);
+
 				// could generate file names as well
-				userDAO.updateFile(candidate.getUserId(), fileName);
-				File localFile = new File("C:\\documents\\", fileName);
+				userDAO.updateFile(candidate.getUserId(), newFileName);
+				File localFile = new File("C:\\documents\\", newFileName);
 				
 				// move the file from memory to the file
 				photo.transferTo(localFile);
