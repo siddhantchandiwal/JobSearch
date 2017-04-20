@@ -46,34 +46,32 @@ public class FileUploadController {
 	
 	@RequestMapping(value = "/AddDocuments.htm", method = RequestMethod.POST)
 	public String handleUpload(@ModelAttribute("user") User user,HttpServletRequest request) {
-		try {
-			// Multipart file will be in the memory.
-			// We need to transfer to a file
-			List<CommonsMultipartFile> photos = user.getDocument();
-			Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+		try{
+			HttpSession session=request.getSession();
+			Candidate u = (Candidate)session.getAttribute("loggedUser");
+			CommonsMultipartFile documentInMemory = user.getDocument();
+			String fileName = documentInMemory.getOriginalFilename();
+			userDAO.updateFile(u.getUserId(), fileName);
+			File localFile = new File("C:/documents", fileName);
+			documentInMemory.transferTo(localFile);
+			user.setFileName(fileName);
 			
-			for (CommonsMultipartFile photo : photos) {
-				String fileName = photo.getOriginalFilename();
-				String newFileName = fileName + candidate.getUserId();
-				
-
-				// could generate file names as well
-				userDAO.updateFile(candidate.getUserId(), newFileName);
-				File localFile = new File("C:\\documents\\", newFileName);
-				
-				// move the file from memory to the file
-				photo.transferTo(localFile);
-				
-				
-				
-			}
+			
+			System.out.println("File is stored at "+localFile.getPath());
+			System.out.println("Congratulations all your documents have been successfully saved in the database");
+			return "UploadSuccess";
+			
+			
+			
 		} catch (IllegalStateException e) {
 			System.out.println("*** IllegalStateException: " + e.getMessage());
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("*** IOException: " + e.getMessage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("Congratulations all your documents have been successfully saved in the database");
-		return "UploadSuccess";
+		return "AddDocuments";
 	}
-
 }

@@ -149,9 +149,13 @@ public class UserDAO extends DAO{
 			begin();
 			// System.out.println("inside DAO");
 
+			System.out.println("Hello I am here");
 			profileDetails.setCandidate(candidate);
 			candidate.getProfile().add(profileDetails);
 			getSession().save(profileDetails);
+			
+			System.out.println("I have reached ******************");
+			
 			commit();
 			close();
 			return;
@@ -164,7 +168,7 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void editProfileDetails(int profileDetailsID, String educationLevel, String major, double gpa, int startYear, int expYearOfGraduation, 
+	public void editProfileDetails(int profileID, String educationLevel, String major, double gpa, int startYear, int expYearOfGraduation, 
 			String universityName, String universityAddress, String companyName, String companyType, String jobTitle, String annualStartPay, String annualEndPay, 
 			String companyCity, String companyState, String companyCountry, String companyZipCode) {
 		// TODO Auto-generated method stub
@@ -172,31 +176,31 @@ public class UserDAO extends DAO{
 		try {
 
 			begin();
-			Query query = getSession().createQuery("from Profile academicprofile where academicprofile.profileID = :profileID");
-
-			query.setInteger("profileID", profileDetailsID);
-
-			Profile p = (Profile) query.uniqueResult();
-			p.setEducationLevel(educationLevel);
-			p.setMajor(major);
-			p.setGpa(gpa);
-			p.setStartYear(startYear);
-			p.setExpYearOfGraduation(expYearOfGraduation);
-			p.setUniversityName(universityName);
-			p.setUniversityAddress(universityAddress);
-			p.setCompanyName(companyName);
-			p.setCompanyType(companyType);
-			p.setJobTitle(jobTitle);
-			p.setAnnualStartPay(annualStartPay);
-			p.setAnnualEndPay(annualEndPay);
-			p.setCompanyCity(companyCity);
-			p.setCompanyState(companyState);
-			p.setCompanyCountry(companyCountry);
-			p.setCompanyZipCode(companyZipCode);
+			Query query = getSession().createQuery("update Profile set educationLevel = :educationLevel, major = :major, gpa = :gpa, startYear = :startYear, "
+					+ "expYearOfGraduation = :expYearOfGraduation, universityName = :universityName, universityAddress = :universityAddress, companyName = :companyName, "
+					+ "companyType = :companyType, jobTitle = :jobTitle, annualStartPay = :annualStartPay, annualEndPay = :annualEndPay, companyCity = :companyCity ,"
+					+ "companyState = :companyState, companyCountry = :companyCountry, companyZipCode = :companyZipCode where  profileID = :profileID");
 			
-
-		//	System.out.println("inside DAO");
-			getSession().update(p);
+			query.setString("educationLevel", educationLevel);
+			query.setString("major", major);
+			query.setDouble("gpa", gpa);
+			query.setInteger("startYear", startYear);
+			query.setInteger("expYearOfGraduation", expYearOfGraduation);
+			query.setString("universityName", universityName);
+			query.setString("universityAddress", universityAddress);
+			query.setString("companyName", companyName);
+			query.setString("companyType", companyType);
+			query.setString("jobTitle", jobTitle);
+			query.setString("annualStartPay", annualStartPay);
+			query.setString("annualEndPay", annualEndPay);
+			query.setString("companyCity", companyCity);
+			query.setString("companyState", companyState);
+			query.setString("companyCountry", companyCountry);
+			query.setString("companyZipCode", companyZipCode);
+			
+			
+			
+			query.executeUpdate();
 			commit();
 			close();
 			return;
@@ -204,7 +208,6 @@ public class UserDAO extends DAO{
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			rollback();
-
 		}
 
 	}
@@ -215,11 +218,13 @@ public class UserDAO extends DAO{
 			begin();
 			Query query = getSession().createQuery("from Profile where candidate = :candidateID");
 			query.setInteger("candidateID", candidate.getUserId());
-			List<Profile> academicDetailsList = query.list();
+			List<Profile> profileDetailsList = query.list();
+			
+			
 
 			commit();
 			close();
-			return academicDetailsList;
+			return profileDetailsList;
 
 		} catch (HibernateException e) {
 			rollback();
@@ -330,7 +335,7 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void updatePersonalInfo(int userID, String streetLine1, String streetLine2, String city, String state, String country, String emailId, int phone, int zipCode) {
+	public void updatePersonalInfo(int userID, String streetLine1, String streetLine2, String city, String state, String country, String emailId, long phone, long zipCode) {
 		// TODO Auto-generated method stub
 
 		try {
@@ -345,8 +350,8 @@ public class UserDAO extends DAO{
 			u.setString("state",state);
 			u.setString("country",country);
 			u.setString("emailId",emailId);
-			u.setInteger("phone",phone);
-			u.setInteger("zipCode",zipCode);
+			u.setLong("phone",phone);
+			u.setLong("zipCode",zipCode);
 			u.executeUpdate();
 			commit();
 			close();
@@ -364,13 +369,16 @@ public class UserDAO extends DAO{
 	public void updateFile(int userID, String fileName){
 		try{
 			begin();
-			System.out.println("********************************************");
-			Query query = getSession().createQuery("update User set filename = :filename where userId = :userID");
+			System.out.println("********************************************Update file");
+			Query query = getSession().createQuery("update User set fileName = :fileName where userId = :userID");
 			System.out.println("??????????????????????????"+userID);
 			query.setInteger("userID", userID);
 			System.out.println("------------------------"+fileName);
-			query.setString("filename", fileName);
-			query.executeUpdate();
+			query.setString("fileName", fileName);
+			int r=query.executeUpdate();
+			
+			System.out.println("Count:"+r);
+			
 			commit();
 			close();
 			return;

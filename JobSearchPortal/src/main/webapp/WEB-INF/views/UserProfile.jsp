@@ -31,7 +31,7 @@
 		var firstName = document.getElementById("firstName").value;
 		var lastName = document.getElementById("lastName").value;	
 		var email = document.getElementById("emailId").value;
-		var contactNumber=document.getElementById("phone").value;
+		
 		
 		if (!letter.test(firstName)) {
 			errmsg="*First Name must have valid alphabet characters";  
@@ -47,12 +47,6 @@
 			flag = false;
 		}else if (lastName == ""|| lastName==null) {
 			errmsg = "*Last Name cannot be kept blank";
-			flag = false;
-		}else if(contactNumber == "" || contactNumber==null){
-			errmsg = "* Phone number cannot be kept blank";
-			flag = false;
-		}else if(contactNumber<7000000000 || contactNumber>9999999999){
-			errmsg = "* Please enter a valid Phone Number";
 			flag = false;
 		}else{
 			errmsg=true;

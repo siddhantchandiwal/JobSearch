@@ -1,7 +1,5 @@
 package com.neu.pojo;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,32 +22,29 @@ public class User{
 	@Column(name = "userId", unique = true, nullable = false)
 	private int userId;
 	
-	
 	@Transient
-	private List<CommonsMultipartFile> document;   //for DataBinder to bind <input type="file".../>
-	  //will not be mapped for Hibernate as we store the file in the FileSystem
-	  //file will be placed into this field by DataBinder
-	  //file is in the memory. needs to be transferred to the FileSystem using java.io.file
-	@Column(name = "filename")
-	private String filename;  
+	private CommonsMultipartFile document;
 	
-	
-	
-	public List<CommonsMultipartFile> getDocument() {
+	@Column(name = "fileName")
+	private String fileName;
+
+	public CommonsMultipartFile getDocument() {
 		return document;
 	}
 
-	public void setDocument(List<CommonsMultipartFile> document) {
+	public void setDocument(CommonsMultipartFile document) {
 		this.document = document;
 	}
 
-	public String getFilename() {
-		return filename;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
+
+
 
 	@Column(name = "userName")
 	private String userName;
@@ -85,10 +80,10 @@ public class User{
 	private String country;
 	
 	@Column(name = "zipCode")
-	private int zipCode;
+	private long zipCode;
 	
 	@Column(name = "phone")
-	private int phone;
+	private long phone;
 	
 	public User() {
 	}
@@ -200,23 +195,23 @@ public class User{
 		this.country = country;
 	}
 
-	public int getZipCode() {
+
+
+	public long getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(int zipCode) {
+	public void setZipCode(long zipCode) {
 		this.zipCode = zipCode;
 	}
 
-	public int getPhone() {
+	public long getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-
-	
 
 	@Override
 	public String toString(){

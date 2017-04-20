@@ -76,11 +76,14 @@ public class SignUpUserController {
 	
 	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.POST)
 	public ModelAndView updateUserProfile(@ModelAttribute("user") User user, BindingResult result,HttpServletRequest request) {
-		
+		System.out.println("**************Hi I am here****");
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 		System.out.println(candidate.getUserId());
 		System.out.println(request.getSession().getAttribute("streetLine1"));
 		System.out.println(user.getStreetLine1());
+		
+		System.out.println("******************" +candidate.getUserId());
+		
 		//System.out.println("Street Line1:**************" + user.getStreetLine1());
 		userDao.updatePersonalInfo(candidate.getUserId(), user.getStreetLine1(), user.getStreetLine2(), user.getCity(),
 				user.getState(), user.getCountry(), user.getEmailId(), user.getPhone(), user.getZipCode());

@@ -22,7 +22,7 @@ public class Candidate extends User{
 
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Set<Profile> profile = new HashSet<Profile>();
 
 	public Candidate(String firstName, String lastName, String userName, String password, String emailId, String userType) {

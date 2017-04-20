@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "Profile")
 public class Profile {
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "candidate", nullable = false)
 	private Candidate candidate;
 	

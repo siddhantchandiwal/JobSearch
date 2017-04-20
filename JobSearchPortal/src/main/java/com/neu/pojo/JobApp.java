@@ -21,15 +21,15 @@ public class JobApp {
 	@Column(name = "jobApplicationID", unique = true, nullable = false)
 	private int jobApplicationID;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "jobID")
 	private Job job;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private Candidate candidate;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jobApp")
+	@OneToMany(mappedBy = "jobApp")
 	private Set<JobStatus> jobStatus = new HashSet<JobStatus>();
 	
 	@Column(name="currentJobStatus")

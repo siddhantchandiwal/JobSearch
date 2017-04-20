@@ -13,6 +13,6 @@
 <%@include file="CandidateHeader.jsp" %>
 
 
-Details Saved Successfully
+Details Saved Successfully.. Thank you!!!
 </body>
 </html>

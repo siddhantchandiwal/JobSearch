@@ -176,9 +176,9 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/addAD.htm", method = RequestMethod.POST)
 	public ModelAndView addAcademicDetailstoDB(@ModelAttribute("profileDetails") Profile profileDetails, BindingResult result, HttpServletRequest request) {
-
-		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
-		if (candidate != null) {
+		
+		
+		 
 			profileValidator.validate(profileDetails, result);
 			if (result.hasErrors()) {
 				ModelAndView mv = new ModelAndView();
@@ -187,17 +187,16 @@ public class ProfileController {
 				return mv;
 			}
 			
+			Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 			userDAO.addProfileDetails(profileDetails, candidate);
+			
+			
 
 			List l = userDAO.getProfileDetails(candidate);
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("profileDetailsList", l);
 			mav.setViewName("ProfileSaved");
 			return mav;
-		} else {
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("Main");
-			return mav;
-		}
-	}
+		} 
+	
 }
