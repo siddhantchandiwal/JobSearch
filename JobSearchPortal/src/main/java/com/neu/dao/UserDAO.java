@@ -168,7 +168,7 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void editProfileDetails(int profileID, String educationLevel, String major, double gpa, int startYear, int expYearOfGraduation, 
+	public void editProfileDetails(int profileID, String educationLevel, String major, Double gpa, int startYear, int expYearOfGraduation, 
 			String universityName, String universityAddress, String companyName, String companyType, String jobTitle, String annualStartPay, String annualEndPay, 
 			String companyCity, String companyState, String companyCountry, String companyZipCode) {
 		// TODO Auto-generated method stub
@@ -181,6 +181,7 @@ public class UserDAO extends DAO{
 					+ "companyType = :companyType, jobTitle = :jobTitle, annualStartPay = :annualStartPay, annualEndPay = :annualEndPay, companyCity = :companyCity ,"
 					+ "companyState = :companyState, companyCountry = :companyCountry, companyZipCode = :companyZipCode where  profileID = :profileID");
 			
+			query.setInteger("profileID", profileID);
 			query.setString("educationLevel", educationLevel);
 			query.setString("major", major);
 			query.setDouble("gpa", gpa);
@@ -241,7 +242,7 @@ public class UserDAO extends DAO{
 			begin();
 			Query query = getSession().createQuery("from Profile academicprofile where academicprofile.profileID = :profileID");
 
-			query.setInteger("profileDetailsID", Integer.parseInt(profileDetailsID));
+			query.setInteger("profileID", Integer.parseInt(profileDetailsID));
 
 			Profile profile = (Profile) query.uniqueResult();
 			return profile;

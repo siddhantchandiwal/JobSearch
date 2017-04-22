@@ -41,11 +41,11 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/EditProfileDetails.htm", method = RequestMethod.GET)
-	public ModelAndView editProfileDetails(@RequestParam("adID") String profileDetailsID, HttpServletRequest request) {
+	public ModelAndView editProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 		if (candidate != null) {
-			Profile profile = userDAO.getProfileDetailsByID(profileDetailsID);
+			Profile profile = userDAO.getProfileDetailsByID(profileID);
 
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("profileDetails", profile);
@@ -61,13 +61,12 @@ public class ProfileController {
 	
 	
 	@RequestMapping(value = "/DeleteProfileDetails.htm", method = RequestMethod.GET)
-	public ModelAndView deleteProfileDetails(@RequestParam("adID") String profileDetailsID,
-			HttpServletRequest request) {
+	public ModelAndView deleteProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
 		if (candidate != null) {
-			Profile profile = userDAO.getProfileDetailsByID(profileDetailsID);
+			Profile profile = userDAO.getProfileDetailsByID(profileID);
 			userDAO.deleteProfileDetails(profile);
 			
 
@@ -111,6 +110,7 @@ public class ProfileController {
 				profileDetails.getCompanyName(), profileDetails.getCompanyType(), profileDetails.getJobTitle(), profileDetails.getAnnualStartPay(), profileDetails.getAnnualEndPay(),
 				profileDetails.getCompanyCity(), profileDetails.getCompanyState(), profileDetails.getCompanyCountry(), profileDetails.getCompanyZipCode());
 
+		System.out.println("Profile Detail are : ********" +profileDetails.getCompanyCountry());
 		List list = userDAO.getProfileDetails(candidate);
 		
 		ModelAndView mv = new ModelAndView();

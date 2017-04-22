@@ -13,8 +13,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Online Job Search Portal</title>
-
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.css" />">
 <link rel="stylesheet"

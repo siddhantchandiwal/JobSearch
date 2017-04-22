@@ -105,7 +105,8 @@
 
                         </td>
                         	
-                        	<td><a href="EditProfileDetails.htm?adID=${academicDetails.academicDetailsID }">Edit</a></td>
+                        	<td><a href="EditProfileDetails.htm?adID=${profileDetails.profileID }">Update</a></td><br>
+                        	<td><a href="DeleteProfileDetails.htm?adID=${profileDetails.profileID }">Delete</a></td>
                         </tr>
                        
                         </c:forEach>
