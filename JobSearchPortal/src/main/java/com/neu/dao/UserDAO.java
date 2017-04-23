@@ -19,7 +19,7 @@ import org.hibernate.criterion.Restrictions;
 
 import org.springframework.stereotype.Component;
 
-
+import com.neu.exception.AdminException;
 import com.neu.exception.UserException;
 import com.neu.pojo.Profile;
 import com.neu.pojo.Admin;
@@ -98,6 +98,36 @@ public class UserDAO extends DAO{
 			System.out.println("Error occured");
 		}
 
+	}
+	
+	
+	public List<User> listOfUsers() throws AdminException{
+		try {
+            begin();
+            Query q = getSession().createQuery("from User");
+            List<User> users = q.list();
+            commit();
+            return users;
+            
+        } catch (HibernateException e) {
+            rollback();
+            throw new AdminException("Could not get Users", e);
+        }
+	}
+	
+	public List<User> listOfEmpUsers() throws AdminException{
+		try {
+            begin();
+            Query q = getSession().createQuery("from User u where u.userType=:userType ");
+            q.setString("userType", "Employer");
+            List<User> users = q.list();
+            commit();
+            return users;
+            
+        } catch (HibernateException e) {
+            rollback();
+            throw new AdminException("Could not get Users", e);
+        }
 	}
 	
 	public User register(User u)

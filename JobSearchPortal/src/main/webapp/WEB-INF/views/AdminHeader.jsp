@@ -24,6 +24,7 @@
     <ul class="nav navbar-nav">
        
       <li><a href="AddOrg.htm">Add New Organization</a></li>
+      <li><a href="ViewEmployer.htm">View Employers List</a>
       
         
      
