@@ -49,7 +49,7 @@ public class EmployerController {
 		return employer;
 	}
 	
-	@RequestMapping(value = "/EmpProfile.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Employer/EmpProfile.htm", method = RequestMethod.GET)
 	public ModelAndView initializeForm(@ModelAttribute("employer") Employer employer) {
 		if (employer != null) {
 			List orgList = orgDAO.list();
@@ -66,7 +66,7 @@ public class EmployerController {
 		}
 	}
 	
-	@RequestMapping(value = "/EmpProfile.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Employer/EmpProfile.htm", method = RequestMethod.POST)
 	public ModelAndView submitForm(@ModelAttribute("employer") Employer employer) {
 
 		String orgName = employer.getOrgName();
@@ -78,13 +78,13 @@ public class EmployerController {
 		return new ModelAndView("ProfileSave","save", "user");
 	}
 	
-	@RequestMapping(value = "/AddNewJob.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Employer/AddNewJob.htm", method = RequestMethod.GET)
 	public ModelAndView submitAddJobsForm(@ModelAttribute("job") Job job) {
 
 		return new ModelAndView("AddNewJob","addjob","user");
 	}
 
-	@RequestMapping(value = "/AddNewJob.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Employer/AddNewJob.htm", method = RequestMethod.POST)
 	public ModelAndView AddJobsForm(@ModelAttribute("job") Job job) {
 
 		Organization org = empDAO.getOrganization(employer);

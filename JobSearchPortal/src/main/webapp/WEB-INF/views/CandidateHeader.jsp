@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Case</title>
+  <title>Candidate Homepage</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -30,7 +30,7 @@
        
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="Logout.htm"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="http://localhost:8080/JobSearchPortal/Logout.htm"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>

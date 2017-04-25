@@ -40,7 +40,7 @@ public class ProfileController {
 
 	}
 
-	@RequestMapping(value = "/EditProfileDetails.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/EditProfileDetails.htm", method = RequestMethod.GET)
 	public ModelAndView editProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -60,7 +60,7 @@ public class ProfileController {
 	}
 	
 	
-	@RequestMapping(value = "/DeleteProfileDetails.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/DeleteProfileDetails.htm", method = RequestMethod.GET)
 	public ModelAndView deleteProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -85,15 +85,16 @@ public class ProfileController {
 		}
 	}
 	
-	@RequestMapping(value = "/EditAD.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/EditAD.htm", method = RequestMethod.GET)
 	public String handlingCode3() {
 		return "Main";
 	}
 
-	@RequestMapping(value = "/EditAD.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Candidate/EditAD.htm", method = RequestMethod.POST)
 	public ModelAndView editADintoDB(@ModelAttribute("profileDetails") Profile profileDetails,
-			BindingResult result, @RequestParam("ID") String ID, HttpServletRequest request) {
+			BindingResult result, @RequestParam("ID") String ID, HttpServletRequest request) throws Exception {
 
+		
 		profileValidator.validate(profileDetails, result);
 		if (result.hasErrors()) {
 			ModelAndView mv = new ModelAndView();
@@ -117,10 +118,11 @@ public class ProfileController {
 		mv.addObject("profileDetailsList", list);
 		mv.setViewName("ViewProfDetails");
 		return mv;
+		
 
 	}
 	
-	@RequestMapping(value = "/ViewProfDetails.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/ViewProfDetails.htm", method = RequestMethod.GET)
 	public ModelAndView viewProfileDetails(HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -147,10 +149,14 @@ public class ProfileController {
 		}
 	}
 	
+	@RequestMapping(value = "/Candidate/addMoreProfileDetails.htm", method = RequestMethod.GET)
+	public String handlingCode2() {
+		return "Main";
+
+	}
 	
 	
-	
-	@RequestMapping(value = "/addMoreProfileDetails.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Candidate/addMoreProfileDetails.htm", method = RequestMethod.POST)
 	public String addAcademicDetails(@ModelAttribute("profileDetails") Profile profile, BindingResult result, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -162,19 +168,15 @@ public class ProfileController {
 		}
 	}
 	
-	@RequestMapping(value = "/addMoreProfileDetails.htm", method = RequestMethod.GET)
-	public String handlingCode2() {
-		return "Main";
+	
 
-	}
-
-	@RequestMapping(value = "/addAD.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/addAD.htm", method = RequestMethod.GET)
 	public String handlingCode1() {
 		return "Main";
 
 	}
 	
-	@RequestMapping(value = "/addAD.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Candidate/addAD.htm", method = RequestMethod.POST)
 	public ModelAndView addAcademicDetailstoDB(@ModelAttribute("profileDetails") Profile profileDetails, BindingResult result, HttpServletRequest request) {
 		
 		

@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+
+import com.neu.dao.EmpDAO;
 import com.neu.dao.OrgDAO;
 import com.neu.dao.UserDAO;
 import com.neu.exception.AdminException;
@@ -26,7 +29,10 @@ import com.neu.pojo.Admin;
 import com.neu.pojo.Organization;
 import com.neu.pojo.User;
 
+
 @Controller
+@RequestMapping("/Admin/*")
+
 public class AdminController {
 	
 	@Autowired
@@ -37,10 +43,14 @@ public class AdminController {
 	@Qualifier("userDAO")
 	UserDAO userDAO;
 	
+	@Autowired
+	@Qualifier("empDAO")
+	EmpDAO empDAO;
+	
 	User user;
 	List<User> users;
 
-	@RequestMapping(value = "/AddOrg.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Admin/AddOrg.htm", method = RequestMethod.GET)
 	public ModelAndView initializeForm(@ModelAttribute("organization") Organization organization, BindingResult result,
 			HttpServletRequest request) {
 
@@ -51,45 +61,7 @@ public class AdminController {
 			return new ModelAndView("Main","error","user");
 	}
 	
-	@RequestMapping(value="/ViewEmployer.htm", method=RequestMethod.GET)
-	public ModelAndView viewSellersPage(HttpServletRequest request, User user, BindingResult result) throws AdminException{
-		
-		HttpSession session = (HttpSession) request.getSession();
-		List<User> users =userDAO.listOfUsers();
-		System.out.println("Printing the size of users List: "+users.size());
-		session.setAttribute("users", users);
-		
-		
-		return new ModelAndView("ViewEmployer","users",users);
-	}
-	
-	
-	@RequestMapping(value = "/ViewEmpListinPDF.pdf", method = RequestMethod.GET)
-	public void showPdfReport(HttpServletRequest request, HttpServletResponse response) throws IOException, AdminException{
-		System.out.println("*******Inside PDF Now*********");
-		Admin admin = (Admin) request.getSession().getAttribute("loggedUser");
-		
-		List<User> users =userDAO.listOfEmpUsers();
-		
-		System.out.println("**********Size "+users.size());
-		if (admin != null) {
-			ServletContext context = request.getSession().getServletContext();
-			
-			System.out.println("*******Inside Admin object*****");
-			
-			MyPdfView pdfView = new MyPdfView();
-			try {
-				pdfView.buildPdfDocument(users);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-		}
-
-	}
-	
-	@RequestMapping(value = "/AddOrg.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Admin/AddOrg.htm", method = RequestMethod.POST)
 	protected ModelAndView doSubmitAction(@ModelAttribute("organization") Organization organization, BindingResult result)
 			throws Exception {
 		try {
@@ -98,8 +70,78 @@ public class AdminController {
 			System.out.println("Exception: " + e.getMessage());
 		}
 
-		return new ModelAndView("UserAdded","message","org");
+		return new ModelAndView("OrganizationAdded","message","org");
 	}
+	
+	@RequestMapping(value="/Admin/ViewEmployer.htm", method=RequestMethod.GET)
+	public ModelAndView viewEmployersPage(HttpServletRequest request, User user, BindingResult result) throws AdminException{
+		ModelAndView mv=new ModelAndView();
+		HttpSession session = (HttpSession) request.getSession();
+		//List<User> users =userDAO.listOfUsers();
+		
+		int startPage = (Integer)session.getAttribute("startPage");
+        System.out.println("Start Page: "+startPage);
+        String type=request.getParameter("side");
+        if(type==null || type.equals("next"))
+        {
+        	System.out.println("Inside the If condition");
+        int endPage = startPage+2;
+        
+        int totalSize = empDAO.getTotalCount();
+        System.out.println("Total Count "+totalSize);
+        
+        System.out.println("************Total Count found**************");
+        
+        if(endPage>totalSize){
+        	endPage=totalSize-2;
+            System.out.println("If gt , startPage = "+endPage);
+            mv.addObject("users", empDAO.listPaginatedEmployersUsingCriteria(endPage, 2));
+        }else{
+        	System.out.println("{{{{{{{{{{Inside else condition}}}}}}}}}}}");
+        	mv.addObject("users", empDAO.listPaginatedEmployersUsingCriteria(startPage, 2));
+        }
+        mv.setViewName("ViewEmployer");
+        session.setAttribute("startPage",endPage);
+        }
+        else if(type.equals("back")){
+        	int endPage = startPage-2;
+            if(endPage<0){
+            	mv.addObject("users", empDAO.listPaginatedEmployersUsingCriteria(0, 2));
+            	mv.setViewName("ViewEmployer");
+            	session.setAttribute("startPage", 0);
+            	return mv;
+            }
+            startPage=endPage;
+            mv.addObject("users", empDAO.listPaginatedEmployersUsingCriteria(startPage, 2));
+            mv.setViewName("ViewEmployer");
+            session.setAttribute("startPage",endPage);
+        }
+        return mv;
+	}
+	
+	
+	@RequestMapping(value = "/Admin/ViewEmpListinPDF.pdf", method = RequestMethod.GET)
+	public ModelAndView showPdfReport(HttpServletRequest request) throws IOException, AdminException{
+		System.out.println("*******Inside PDF Now*********");
+		
+		
+		Admin admin = (Admin) request.getSession().getAttribute("loggedUser");
+		View pdfView = new MyPdfView();
+		List<User> users =userDAO.listOfEmpUsers();
+		
+		System.out.println("**********Size "+users.size());
+		if (admin != null) {
+			ServletContext context = request.getSession().getServletContext();
+			
+			System.out.println("*******Inside Admin object*****");
+			
+
+		}
+		return new ModelAndView(pdfView, "users", users);
+
+	}
+	
+	
 	
 	
 }

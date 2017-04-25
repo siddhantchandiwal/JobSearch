@@ -1,93 +1,78 @@
 package com.neu.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.awt.Color;
 import java.util.List;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.view.document.AbstractPdfView;
+
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
 import com.neu.pojo.User;
 
 
-public class MyPdfView {
+public class MyPdfView extends AbstractPdfView{
 
-	public void buildPdfDocument(List<User> users) {
-		Document document = new Document();
+    @Override
+    protected void buildPdfDocument(Map<String, Object> users, Document document, PdfWriter pdfwriter, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // TODO Auto-generated method stub
+        Font  helvetica_18_blue = new Font(Font.HELVETICA, 18, Font.BOLDITALIC, Color.BLUE);
+        Paragraph title = new Paragraph("Employer Details", helvetica_18_blue);
+        
+        Phrase firstPhrase = new Phrase("Details of the Order");
+        
+       @SuppressWarnings("unchecked")
+	List<User> userlist = (List<User>)users.get("users");
+        
+       
+       
+//        System.out.println("Order Id "+orderId);
+        
+       document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+        document.add(new Paragraph(""));
+        document.add(new Paragraph(""));
+        document.add(new Paragraph(""));
+        document.add(Chunk.NEWLINE);
+        
+       PdfPTable table = new PdfPTable(4);
+        table.setTotalWidth(500);
+        table.setLockedWidth(true);
+        table.setWidths(new float[]{1, 1, 1,1});
+        PdfPCell cell;
+        
+       table.addCell(new Paragraph("Employer User Name",FontFactory.getFont(FontFactory.TIMES, 15,Font.BOLD)));
+        table.addCell(new Paragraph("First Name",FontFactory.getFont(FontFactory.TIMES, 15,Font.BOLD)));
+        table.addCell(new Paragraph("Role Type",FontFactory.getFont(FontFactory.TIMES, 15,Font.BOLD)));
+        table.addCell(new Paragraph("Email Id",FontFactory.getFont(FontFactory.TIMES, 15,Font.BOLD)));
+        
+        for (User user : userlist)
+        {
+  
 
-		try {
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("D:\\EmpListing.pdf"));
-			document.open();
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			Chunk chunk = new Chunk("Employer listing as per your selection");
-			Font font = new Font();
-			chunk.setFont(font);
+            table.addCell(String.valueOf(user.getUserName()));
+			table.addCell(String.valueOf(user.getFirstName()));
+			table.addCell(String.valueOf(user.getUserType()));
+			table.addCell(String.valueOf(user.getEmailId()));
+        }
+        
+       document.add(table);
+        
 
-			Paragraph heading = new Paragraph(chunk);
-			heading.setAlignment(Element.ALIGN_CENTER);
+        
+        
+    }
+    
+    
 
-			document.add(heading);
-
-			Paragraph p = new Paragraph();
-			document.add(p);
-
-			PdfPTable table = new PdfPTable(4); 
-
-			table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
-			table.getDefaultCell().setVerticalAlignment(Element.ALIGN_TOP);
-
-			PdfPCell cell1 = new PdfPCell(new Paragraph("Employer UserName"));
-			PdfPCell cell2 = new PdfPCell(new Paragraph("First Name"));
-			PdfPCell cell3 = new PdfPCell(new Paragraph("Type"));
-			PdfPCell cell4 = new PdfPCell(new Paragraph("Email Id"));
-		
-
-			cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-
-			table.addCell(cell1);
-			table.addCell(cell2);
-			table.addCell(cell3);
-			table.addCell(cell4);
-
-
-			for (User user : users) {
-
-				PdfPCell row1 = new PdfPCell(new Paragraph(user.getUserName()));
-				PdfPCell row2 = new PdfPCell(new Paragraph(user.getFirstName()));
-				PdfPCell row3 = new PdfPCell(new Paragraph(user.getUserType()));
-				PdfPCell row4 = new PdfPCell(new Paragraph(user.getEmailId()));
-
-
-				table.addCell(row1);
-				table.addCell(row2);
-				table.addCell(row3);
-				table.addCell(row4);
-
-
-			}
-
-			document.add(table);
-
-			document.close();
-			writer.close();
-		} catch (DocumentException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-
-		}
-	}
-
-
-
-}	
+}

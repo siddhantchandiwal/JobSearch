@@ -1,5 +1,8 @@
 package com.neu.pojo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -43,6 +47,20 @@ public class Job {
 	@JoinColumn(name = "organizationID")
 	private Organization organization;
 	
+	@OneToMany(mappedBy="job")
+	private Set<JobApp> jobApp = new HashSet<JobApp>();
+	
+	
+	
+	
+	public Set<JobApp> getJobApp() {
+		return jobApp;
+	}
+
+	public void setJobApp(Set<JobApp> jobApp) {
+		this.jobApp = jobApp;
+	}
+
 	public Job(){
 		
 	}

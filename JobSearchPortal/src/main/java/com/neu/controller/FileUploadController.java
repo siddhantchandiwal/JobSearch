@@ -37,14 +37,14 @@ public class FileUploadController {
 	ServletContext servletContext;
 	
 
-	@RequestMapping(value = "/AddDocuments.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/AddDocuments.htm", method = RequestMethod.GET)
 	public ModelAndView handleUploadIncoming(HttpServletRequest request) {
 	Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
-	System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+candidate.getUserId());
+	System.out.println("CCCCCCCCCCCC"+candidate.getUserId());
 	return new ModelAndView("AddDocuments");
 	}
 	
-	@RequestMapping(value = "/AddDocuments.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Candidate/AddDocuments.htm", method = RequestMethod.POST)
 	public String handleUpload(@ModelAttribute("user") User user,HttpServletRequest request) {
 		try{
 			HttpSession session=request.getSession();
@@ -58,8 +58,8 @@ public class FileUploadController {
 			
 			
 			System.out.println("File is stored at "+localFile.getPath());
-			System.out.println("Congratulations all your documents have been successfully saved in the database");
-			return "UploadSuccess";
+			System.out.println("Congratulations your document have been successfully saved in the database");
+			return "AddDocuments";
 			
 			
 			

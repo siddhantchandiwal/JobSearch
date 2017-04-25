@@ -64,10 +64,10 @@ public class JobDAO extends DAO{
 			begin();
 
 			JobApp jobApp = new JobApp(job, candidate);
-			jobApp.setCurrentJobStatus("New");
+			jobApp.setCurrentJobStatus("Applied");
 
 			JobStatus jobStatus = new JobStatus();
-			jobStatus.setStatus("New");
+			jobStatus.setStatus("Applied");
 
 			jobApp.getJobStatus().add(jobStatus);
 			getSession().save(jobApp);
@@ -121,6 +121,14 @@ public class JobDAO extends DAO{
 		}
 		return null;
 
+	}
+	
+	public List<JobApp> getJobStatus(Candidate candidate){
+		Criteria criteria = getSession().createCriteria(JobApp.class);
+		Criteria c = criteria.createCriteria("candidate");
+		c.add(Restrictions.eq("userId",candidate.getUserId()));
+		List<JobApp> list = c.list();
+		return list;
 	}
 
 }

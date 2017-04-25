@@ -18,30 +18,19 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.css" />">
 
-
+<style type="text/css">
+.navbar {
+margin-bottom: 0!important;
+}
+</style>
 
 </head>
 <body>
 
 	<%@include file="MainHeader.jsp"%>
-
-	<div class="container" style="">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden-xs">
-				<div id="carousel-299058" class="carousel slide">
-					
-				
-						
-						<div class="item">
-							<img class="img-responsive"
+	<div>
+		<img class="img-responsive"
 								src="<c:url value="/resources/images/Front3.jpg"/>" alt="thumb">
-							<div class="carousel-caption">Online Job Search Portal</div>
-						</div>
-					
-				</div>
-			</div>
-		</div>
-		<hr>
 	</div>
 
 

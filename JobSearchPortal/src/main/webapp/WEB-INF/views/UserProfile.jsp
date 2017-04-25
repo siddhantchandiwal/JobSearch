@@ -68,7 +68,7 @@
 			<div class="col-lg-9 col-md-12">
 				<div class="row">
 
-					<form:form action="${contextPath}/UserProfile.htm"
+					<form:form action="${contextPath}/Candidate/UserProfile.htm"
 						commandName="user" method="post" class="form-horizontal"
 						role="form" onsubmit="return validate()">
 

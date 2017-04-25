@@ -15,6 +15,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+   <script type="text/javascript">
+ 	function validate(){
+ 		var jobDescription = document.getElementsByTagName("input")[0].value;
+ 		var vacancies = document.getElementsByTagName("input")[1].value;
+ 		
+ 		var regex = /^[a-zA-Z]{1,30}$/;
+ 		
+ 		 if (!jobDescription.match(regex)|| jobDescription == null || jobDescription == "") {
+ 	        alert("Not a valid Job Description");
+ 	        return false;
+ 	    }
+ 		 
+ 		 
+ 	}
+  
+ </script>
+  
 </head>
 
 <body>
@@ -23,7 +40,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <div class="container">
   <h2>Create New Jobs</h2>
-  <form:form action="${contextPath}/AddNewJob.htm" commandName="job" method="post" class="form-horizontal" >
+  <form:form action="${contextPath}/Employer/AddNewJob.htm" commandName="job" method="post" class="form-horizontal" >
   <div class="form-group">
     <label class="col-sm-2 control-label">Job Title:</label>
      
@@ -137,7 +154,7 @@
    <div class="col-sm-2"></div>
             <div class="container,col-sm-10">
       <div class="container">
-          <input type="submit" class="btn btn-info" value="Submit">
+          <input type="submit" class="btn btn-info" value="Submit" onclick="return validate()">
           <input type="reset" class="btn btn-info" value="Refresh">
           
       </div>

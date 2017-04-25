@@ -7,6 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search Results</title>
+<!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	
+</script> -->
 </head>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>

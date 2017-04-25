@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <title>Add Profile Details</title>
   <meta charset="utf-8">
@@ -30,7 +30,7 @@
 			<div class="col-lg-9 col-md-12">
 				<div class="row">
 
-					<form:form action="${contextPath}/addAD.htm" commandName="profileDetails" method="post" class="form-horizontal" role="form" >
+					<form:form action="${contextPath}/Candidate/addAD.htm" commandName="profileDetails" method="post" class="form-horizontal" role="form" >
 
 
 						<h3 align="center">Please fill below details</h3>
@@ -50,8 +50,7 @@
 						<div class="form-group">
 							<label for="major" class="col-sm-3 control-label">Major</label>
 							<div class="col-sm-9">
-								<form:input type="text" id="major" placeholder="Major"
-									path="major" class="form-control" />
+								<form:input type="text" id="major" placeholder="Major" path="major" class="form-control" />
 								<form:errors path="major" cssStyle="color:#ff0000"></form:errors>
 							</div>
 						</div>

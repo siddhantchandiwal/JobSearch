@@ -30,7 +30,7 @@
 	  
 	  
 	  if (!orgType.match(regex)|| orgType == null || orgType == "") {
-	        alert("Not a valid Name");
+	        alert("Not a valid Organization Type");
 	        return false;
 	    }
 	  
@@ -47,7 +47,7 @@
     
 <div class="container">
   <h2>Please add New Organization</h2>
-  <form:form action="${contextPath}/AddOrg.htm" commandName="organization" method="post" class="form-horizontal" >
+  <form:form action="${contextPath}/Admin/AddOrg.htm" commandName="organization" method="post" class="form-horizontal" >
     <div class="form-group">
       
      <label class="col-sm-2 control-label">Organization Name</label>

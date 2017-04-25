@@ -1,5 +1,5 @@
 <%-- 
-    Document   : UserAdded
+    Document   : OrganizationAdded
     Created on : Apr 4, 2017, 11:08:23 PM
     Author     : Siddhant Chandiwal
 --%>
@@ -28,7 +28,7 @@
 			<div class="col-lg-9 col-md-12">
 				<div class="row">
 
-					<h3 class="text-center">User Added Successfully</h3>
+					<h3 class="text-center">Thank you for registration</h3>
 
 				</div>
 			</div>

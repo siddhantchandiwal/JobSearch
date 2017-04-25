@@ -39,7 +39,10 @@ public class HomeController {
 	
 	{
 		HttpSession session = request.getSession();
+		request.getSession().setAttribute("role", null);
+		System.out.println("After logout*************" +request.getSession().getAttribute("role"));
 		session.invalidate();
+		
 		return "Main";
 	}
 

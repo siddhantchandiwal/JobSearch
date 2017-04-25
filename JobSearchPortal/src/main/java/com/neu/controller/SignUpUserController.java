@@ -46,7 +46,7 @@ public class SignUpUserController {
 			if ((checkIfUniqueExists) && (checkIfUniqueEmail)) {
 				userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());
 				UserDAO.sendMail(user, "Your Registration has been booked successfully");
-				return new ModelAndView("UserAdded", "user", user);
+				return new ModelAndView("UserRegistered", "user", user);
 			}
 
 		} catch (Exception e) {
@@ -57,7 +57,7 @@ public class SignUpUserController {
 
 	}
 	
-	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/Candidate/UserProfile.htm", method = RequestMethod.GET)
 	public ModelAndView profile(HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -74,7 +74,7 @@ public class SignUpUserController {
 		}
 	}
 	
-	@RequestMapping(value = "/UserProfile.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/Candidate/UserProfile.htm", method = RequestMethod.POST)
 	public ModelAndView updateUserProfile(@ModelAttribute("user") User user, BindingResult result,HttpServletRequest request) {
 		System.out.println("**************Hi I am here****");
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
@@ -90,11 +90,19 @@ public class SignUpUserController {
 		return new ModelAndView("UserProfile","userprofile", "Details saved Successfully");
 	}
 	
-	@RequestMapping(value = "/login.htm", method = RequestMethod.POST)
-	protected ModelAndView authenticate(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
+	
+	@RequestMapping(value = "/Employer/emplogin.htm", method = RequestMethod.GET)
+	protected ModelAndView authenticateEmpLogin(@ModelAttribute("user") User user, BindingResult result) throws Exception {
+
+		return new ModelAndView("emplogin","user",user);
+	}
+	
+	@RequestMapping(value = "/Employer/emplogin.htm", method = RequestMethod.POST)
+	protected ModelAndView authenticateEmpLogin(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
 			throws Exception {
 
 		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
 
 		try {
 			System.out.print("test");
@@ -104,34 +112,104 @@ public class SignUpUserController {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+enteredUser.getUserId());
 			
 			if (enteredUser.getUserType().equalsIgnoreCase("Employer")) {
+				
+				System.out.println("**********Inside Emp");
 				Employer loggedUser = (Employer) enteredUser;
 				session.setAttribute("loggedUser", loggedUser);
+				session.setAttribute("user", loggedUser);
+				session.setAttribute("role", "Employer");
 				return new ModelAndView("EmployerMain","emp page","user");
 			} 
-			else if (enteredUser.getUserType().equalsIgnoreCase("Candidate")) {
-				Candidate loggedUser = (Candidate) enteredUser;
-				session.setAttribute("loggedUser", loggedUser);
-				System.out.println("*************************"+loggedUser.getFirstName());
-				return new ModelAndView("CandidateMain","candidate",enteredUser.getFirstName());
-			} 
-			else if (enteredUser.getUserType().equalsIgnoreCase("Admin")) {
-				Admin loggedUser = (Admin) enteredUser;
-				session.setAttribute("loggedUser", loggedUser);
-				return new ModelAndView("AdminMain","admin","user");
-			}
+			
 
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
 		
-		return new ModelAndView("login","loginFailed","UserName and Password does not Match");
+		return new ModelAndView("emplogin","loginFailed","UserName and Password does not Match");
 	}
 	
-	@RequestMapping(value = "/login.htm", method = RequestMethod.GET)
-	protected ModelAndView authenticateForm(@ModelAttribute("user") User user, BindingResult result) throws Exception {
+	
+	@RequestMapping(value = "/Admin/adminlogin.htm", method = RequestMethod.GET)
+	protected ModelAndView authenticateAdminLogin(@ModelAttribute("user") User user, BindingResult result) throws Exception {
 
-		return new ModelAndView("login","user",user);
+		return new ModelAndView("adminlogin","user",user);
 	}
+	
+	@RequestMapping(value = "/Admin/adminlogin.htm", method = RequestMethod.POST)
+	protected ModelAndView authenticateAdminLogin(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
+			throws Exception {
+
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+
+		try {
+			System.out.print("test");
+			User enteredUser = userDao.validate(user.getUserName(), user.getPassword());
+		
+			System.out.println("Entered user is " + enteredUser.getUserType());
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+enteredUser.getUserId());
+			
+			if (enteredUser.getUserType().equalsIgnoreCase("Admin")) {
+				
+				System.out.println("**********Inside Admin");
+				Admin loggedUser = (Admin) enteredUser;
+				session.setAttribute("loggedUser", loggedUser);
+				session.setAttribute("user", loggedUser);
+				session.setAttribute("startPage", 0);
+				session.setAttribute("role", "Admin");
+				return new ModelAndView("AdminMain","admin","user");
+			} 
+			
+
+		} catch (Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+		return new ModelAndView("adminlogin","loginFailed","UserName and Password does not Match");
+	}
+	
+	@RequestMapping(value = "/Candidate/candidatelogin.htm", method = RequestMethod.GET)
+	protected ModelAndView authenticateCandidateLogin(@ModelAttribute("user") User user, BindingResult result) throws Exception {
+
+		return new ModelAndView("candidatelogin","user",user);
+	}
+	
+	
+	@RequestMapping(value = "/Candidate/candidatelogin.htm", method = RequestMethod.POST)
+	protected ModelAndView authenticateCandidateLogin(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
+			throws Exception {
+
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+
+		try {
+			System.out.print("test");
+			User enteredUser = userDao.validate(user.getUserName(), user.getPassword());
+		
+			System.out.println("Entered user is " + enteredUser.getUserType());
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+enteredUser.getUserId());
+			
+			if (enteredUser.getUserType().equalsIgnoreCase("Candidate")) {
+				
+				System.out.println("**********Inside Candidate");
+				Candidate loggedUser = (Candidate) enteredUser;
+				session.setAttribute("loggedUser", loggedUser);
+			//	session.setAttribute("role", "Candidate");
+				return new ModelAndView("CandidateMain","candidate",enteredUser.getFirstName());
+			} 
+			
+
+		} catch (Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+		return new ModelAndView("candidatelogin","loginFailed","UserName and Password does not Match");
+	}
+	
+	
+	
+	
 	
 	
 

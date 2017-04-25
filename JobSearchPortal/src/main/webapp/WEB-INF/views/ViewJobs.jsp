@@ -1,5 +1,5 @@
 <%-- 
-    Document   : ViewJobs
+    Document   : SearchJobs
     Created on : Apr 4, 2017, 11:08:23 PM
     Author     : Siddhant Chandiwal
 --%>
@@ -14,9 +14,9 @@
 </head>
 <body>
 <%@include file="CandidateHeader.jsp" %>
-  		<h2>View Jobs Page</h2>
+  		<h2>Search Job</h2>
   		
-  		<form action="ViewJobs.htm" method="post">
+  		<form action="${pageContext.request.contextPath}/Candidate/ViewJobs.htm" method="post">
             
          <div class="form-group">
 				<label class="col-sm-2 control-label">Job Title</label>

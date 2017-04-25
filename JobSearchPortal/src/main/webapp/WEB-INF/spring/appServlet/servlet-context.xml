@@ -24,6 +24,35 @@
 <!-- Imports user-defined @Controller beans that process client requests -->
 	<beans:import resource="controllers.xml" />
 	
+	<interceptors>
+        <interceptor>
+            <mapping path="/Candidate/*" />
+            <exclude-mapping path="/Candidate/candidatelogin*" />
+            <beans:bean class="com.neu.Interceptor.CandidateInterceptor">
+                <beans:property name="errorPage" value="" />
+            </beans:bean>
+        </interceptor>
+        
+        
+        <interceptor>
+            <mapping path="/Admin/*" />
+            <exclude-mapping path="/Admin/adminlogin*" />
+            <beans:bean class="com.neu.Interceptor.AdminInterceptor">
+                <beans:property name="errorPage" value="" />
+            </beans:bean>
+        </interceptor>
+        
+        <interceptor>
+            <mapping path="/Employer/*" />
+            <exclude-mapping path="/Employer/emplogin*" />
+            <beans:bean class="com.neu.Interceptor.EmployerInterceptor">
+                <beans:property name="errorPage" value="" />
+            </beans:bean>
+        </interceptor>
+        
+        
+    </interceptors>
+	
 	
 	
 </beans:beans>

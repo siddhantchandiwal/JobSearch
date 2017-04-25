@@ -14,17 +14,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+  <script type="text/javascript">
+  
+  function validate(){
+	  
+	 alert("Your document has been successfully uploaded");
+	  return true;
+	 
+  }
+  
+  
+  </script>
+  
+  
 </head>
 <body>
 <%@include file="CandidateHeader.jsp" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<a href="${contextPath}/AddDocuments.htm" ></a> <br />
+<a href="AddDocuments.htm" ></a> <br />
 
 
 <form:form commandName="user" method="post" enctype="multipart/form-data">
-Select Document 1: <input type="file" name="document"/><br/>
-<input type="submit" value="Upload Button"/>
+Select Document 1: <input type="file" name="document" required/><br/>
+<input type="submit" value="Upload Button" onclick="return validate()"/>
 </form:form>
   		
   		

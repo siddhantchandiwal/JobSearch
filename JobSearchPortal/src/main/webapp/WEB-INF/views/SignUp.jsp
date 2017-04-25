@@ -11,10 +11,8 @@
 
 <title>Online Job Search Portal</title>
 
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.css" />">
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/signup.css" />">
+<link rel="stylesheet" 	href="<c:url value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" 	href="<c:url value="/resources/css/signup.css" />">
 
 
 <script type="text/javascript">
@@ -32,10 +30,6 @@
 		var password = document.getElementById("password").value;
 		var email = document.getElementById("emailId").value;
 		
-
-		
-		
-		
 		if (!letter.test(firstName)) {
 			errmsg="*First Name must have valid alphabet characters";  
 			flag = false;
@@ -45,7 +39,7 @@
 		}else if (!emailformat.test(email)) {
 			errmsg="*Please enter valid Email in the Generic Format";  			
 			flag = false;
-		}else if (username == ""|| username==null) {
+		}else if (userName == ""|| userName==null) {
 			errmsg = "*UserName cannot be kept blank";
 			flag = false;
 		}else if (password == ""|| password==null) {
@@ -149,13 +143,11 @@
 			
 						<div class="form-group">
 							<div class="col-sm-9 col-sm-offset-3">
-								<button type="submit" class="btn btn-primary btn-block">Register</button>
+								<button type="submit" class="btn btn-primary btn-block" onclick="return validate()">Register</button>
 								
 							</div>
 						</div>
-						<p>
-							<label id="ErrorMsgForm"  style="color:red;"></label>
-						</p>
+						
 						
 						<c:if test="${errormessage!=null}">
 						<span class="control-label" style="color:red;">Email/UserName already exist. Please check details again</span>

@@ -26,14 +26,12 @@
         <li class="active"><a href="EmpProfile.htm">My Profile</a></li>
       <li class ="active"><a href="AddNewJob.htm">Add Jobs</a></li>
       
-      <li class ="active"><a href="UpdateStatus.htm">Update Status</a></li>
-      
         
      
     </ul>
     <ul class="nav navbar-nav navbar-right">
      
-      <li><a href="Logout.htm"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="http://localhost:8080/JobSearchPortal/Logout.htm"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

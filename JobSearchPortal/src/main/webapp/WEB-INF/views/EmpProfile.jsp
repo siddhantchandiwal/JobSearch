@@ -32,7 +32,7 @@
 
 <div class="container">
   <h2>Please fill the details</h2>
-  <form:form action="${contextPath}/EmpProfile.htm" commandName="employer" method="post" class="form-horizontal" >
+  <form:form action="${contextPath}/Employer/EmpProfile.htm" commandName="employer" method="post" class="form-horizontal" >
     <div class="form-group">
       
      <label class="col-sm-2 control-label">FirstName</label>

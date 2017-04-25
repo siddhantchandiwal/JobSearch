@@ -22,8 +22,10 @@
 
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="active"><a href="SignUp.htm"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li class="active"><a href="login.htm"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath}/SignUp.htm"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath}/Admin/adminlogin.htm"><span class="glyphicon glyphicon-log-in"></span> Admin Login</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath}/Employer/emplogin.htm"><span class="glyphicon glyphicon-log-in"></span> Employer Login</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath}/Candidate/candidatelogin.htm"><span class="glyphicon glyphicon-log-in"></span> Candidate Login</a></li>
     </ul>
   </div>
 </nav>

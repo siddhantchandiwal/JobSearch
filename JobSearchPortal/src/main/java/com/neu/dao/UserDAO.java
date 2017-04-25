@@ -38,7 +38,7 @@ public class UserDAO extends DAO{
 		   String fname = user.getFirstName();
 		   String lname = user.getLastName();
 		   String name = fname.concat(lname);
-			Email email = new Email();
+		   Email email = new Email();
 
 			email.setFromAddress("Online Job Search Portal", "donotreply.coalition@gmail.com");
 			email.setSubject("Welcome Letter!");
@@ -52,7 +52,39 @@ public class UserDAO extends DAO{
 			
 			sb.append("\n");
 			
-			System.out.println("user id"+user.getEmailId());
+			System.out.println("user id "+user.getEmailId());
+			email.setText(sb.toString());
+			new Mailer("smtp.gmail.com", 465, "donotreply.coalition@gmail.com", "Mh14eu7295",
+					TransportStrategy.SMTP_SSL).sendMail(email);
+			System.out.println("Sent message successfully....");
+		}
+	
+	
+	
+	public void sendSuccessfulMail(Candidate user, String message) throws MalformedURLException, IOException {
+		
+		   System.out.println("Inside Successful email method");
+		   String fname = user.getFirstName();
+		   System.out.println("First Name is "+fname);
+		   String lname = user.getLastName();
+		   String name = fname.concat(lname);
+		   Email email = new Email();
+
+			email.setFromAddress("Online Job Search Portal", "donotreply.coalition@gmail.com");
+			email.setSubject("Thanks for Applying!");
+
+			email.addRecipient(name,user.getEmailId(), Message.RecipientType.TO);
+			StringBuffer sb=new StringBuffer();
+			sb.append("Hello User,");
+			sb.append("\n");
+			sb.append("\n");
+			sb.append("Thank you for applying. Recruitment team will carefully review your profile and will get in touch with you soon");
+			sb.append("\n");
+			sb.append("\n");
+			sb.append("- Recruiting Team");
+			sb.append("\n");
+			
+			System.out.println("user id "+user.getEmailId());
 			email.setText(sb.toString());
 			new Mailer("smtp.gmail.com", 465, "donotreply.coalition@gmail.com", "Mh14eu7295",
 					TransportStrategy.SMTP_SSL).sendMail(email);

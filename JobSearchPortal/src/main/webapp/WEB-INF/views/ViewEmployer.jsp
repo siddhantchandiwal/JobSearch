@@ -21,7 +21,7 @@
 <%@include file="AdminHeader.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <h1>Welcome Admin</h1>
-<form:form action="${contextPath}/ViewEmployer.htm" commandName="ViewEmployer" method="post" class="form-horizontal" >
+<form:form action="${contextPath}/Admin/ViewEmployer.htm" commandName="ViewEmployer" method="post" class="form-horizontal" >
 <h3>List of Employers</h3>
 <table border="1" cellpadding="5" cellspacing="5">
 		<tr>
@@ -48,7 +48,17 @@
 
 <hr/>
 
+<div style="text-align:center">
+ <div class="pagination">
+   <a href="${contextPath}/Admin/ViewEmployer.htm?side=back">&laquo;</a>
+   <a href="${contextPath}/Admin/ViewEmployer.htm?side=next">&raquo;</a>
+ </div>
+</div>
+
 </form:form>
-<a href="${contextPath}/ViewEmpListinPDF.pdf">View List in PDF</a>
+<a href="${contextPath}/Admin/ViewEmpListinPDF.pdf">View List in PDF</a>
+
+
+
 </body>
 </html>

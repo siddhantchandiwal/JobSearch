@@ -30,7 +30,7 @@
 			<div class="col-lg-9 col-md-12">
 				<div class="row">
 
-					<form:form action="${contextPath}/EditAD.htm" commandName="profileDetails" method="post" class="form-horizontal" role="form" >
+					<form:form action="${contextPath}/Candidate/EditAD.htm" commandName="profileDetails" method="post" class="form-horizontal" role="form" >
 					
 					<input type="hidden" name="ID" value="${profileDetails.profileID}"/>
 

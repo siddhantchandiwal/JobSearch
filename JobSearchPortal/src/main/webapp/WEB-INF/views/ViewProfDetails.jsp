@@ -17,7 +17,7 @@
 <%@include file="CandidateHeader.jsp" %>
   		  		
   		<div class="container">
-		<form action="addMoreProfileDetails.htm" method="post" class="form-horizontal">
+		<form action="${pageContext.request.contextPath}/Candidate/addMoreProfileDetails.htm" method="post" class="form-horizontal">
 		<div class="form-group">
   		<table id="myTable" class ="table">
   			<thead>
@@ -105,8 +105,7 @@
 
                         </td>
                         	
-                        	<td><a href="EditProfileDetails.htm?adID=${profileDetails.profileID }">Update</a></td><br>
-                        	<td><a href="DeleteProfileDetails.htm?adID=${profileDetails.profileID }">Delete</a></td>
+                        	<td><a href="EditProfileDetails.htm?adID=${profileDetails.profileID }">Update</a> OR <a href="DeleteProfileDetails.htm?adID=${profileDetails.profileID }">Delete</a></td>
                         </tr>
                        
                         </c:forEach>
