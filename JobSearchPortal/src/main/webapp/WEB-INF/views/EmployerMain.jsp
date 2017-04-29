@@ -14,6 +14,15 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Employer") {
+    %>
+    
 <%@include file="employerheader.jsp" %>
 <div class="container">
  	<div class="form-group">
@@ -24,6 +33,9 @@
   	</div>
  </div>
 
+<%
+}
+%>
 
 </body>
 </html>

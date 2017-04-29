@@ -37,8 +37,8 @@
 						<div class="form-group">
 							<label for="userName" class="col-sm-3 control-label">UserName</label>
 							<div class="col-sm-9">
-								<form:input type="text" id="userName" placeholder="User Name"
-									path="userName" class="form-control" />
+								<form:input type="text" id="userName" placeholder="User Name" required = "true"
+									path="userName"  class="form-control" />
 								<form:errors path="userName" cssStyle="color:#ff0000"></form:errors>
 								
 							</div>
@@ -46,8 +46,8 @@
 						<div class="form-group">
 							<label for="password" class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-9">
-								<form:input type="password" id="password" placeholder="Password"
-									path="password" class="form-control" />
+								<form:input type="password" id="password" placeholder="Password" required = "true"
+									path="password" class="form-control"  />
 								<form:errors path="password" cssStyle="color:#ff0000"></form:errors>
 							</div>
 						</div>

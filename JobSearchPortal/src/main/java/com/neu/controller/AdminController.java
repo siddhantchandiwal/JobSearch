@@ -1,16 +1,12 @@
 package com.neu.controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -32,7 +28,6 @@ import com.neu.pojo.User;
 
 @Controller
 @RequestMapping("/Admin/*")
-
 public class AdminController {
 	
 	@Autowired
@@ -51,14 +46,14 @@ public class AdminController {
 	List<User> users;
 
 	@RequestMapping(value = "/Admin/AddOrg.htm", method = RequestMethod.GET)
-	public ModelAndView initializeForm(@ModelAttribute("organization") Organization organization, BindingResult result,
-			HttpServletRequest request) {
+	public ModelAndView startForm(@ModelAttribute("organization") Organization organization, BindingResult result, HttpServletRequest req) {
 
-		Admin admin = (Admin) request.getSession().getAttribute("loggedUser");
-		if (admin != null)
+		Admin admin = (Admin) req.getSession().getAttribute("loggedUser");
+		if (admin != null){
 			return new ModelAndView("AddOrg","addneworg", "org");
-		else
+		}else{
 			return new ModelAndView("Main","error","user");
+		}
 	}
 	
 	@RequestMapping(value = "/Admin/AddOrg.htm", method = RequestMethod.POST)
@@ -66,7 +61,9 @@ public class AdminController {
 			throws Exception {
 		try {
 			orgDAO.create(organization.getOrganizationName(), organization.getBusinessType());
+			System.out.println("Organization Created here");
 		} catch (Exception e) {
+			System.out.println("Unable to add Organization");
 			System.out.println("Exception: " + e.getMessage());
 		}
 
@@ -74,7 +71,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/Admin/ViewEmployer.htm", method=RequestMethod.GET)
-	public ModelAndView viewEmployersPage(HttpServletRequest request, User user, BindingResult result) throws AdminException{
+	public ModelAndView viewRegEmployersPage(HttpServletRequest request, User user, BindingResult result) throws AdminException{
 		ModelAndView mv=new ModelAndView();
 		HttpSession session = (HttpSession) request.getSession();
 		//List<User> users =userDAO.listOfUsers();

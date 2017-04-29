@@ -5,23 +5,18 @@ import java.net.MalformedURLException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import com.neu.dao.JobDAO;
 import com.neu.dao.OrgDAO;
 import com.neu.dao.UserDAO;
-import com.neu.exception.CandidateException;
-import com.neu.exception.UserException;
 import com.neu.pojo.Candidate;
 import com.neu.pojo.Job;
 import com.neu.pojo.JobApp;
@@ -46,12 +41,15 @@ public class CandidateController {
 	List<Job> jobList;
 	
 	@RequestMapping(value = "/Candidate/ViewJobs.htm", method = RequestMethod.GET)
-	public ModelAndView initializeForm(HttpServletRequest request) {
+	public ModelAndView startForm(HttpServletRequest request) {
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
 		if (candidate != null) {
 			List orgList = orgDAO.list();
 			ModelAndView mv = new ModelAndView();
+			System.out.println("candidate object not found");
+			System.out.println("Return to same page");
+			//////////////////////////////////////
 			mv.setViewName("ViewJobs");
 			mv.addObject("orgList", orgList);
 
@@ -73,6 +71,7 @@ public class CandidateController {
 		Candidate candidate = (Candidate) req.getSession().getAttribute("loggedUser");
 		
 		if(candidate!=null){
+			//Call Dao method here first
 			int appID = jobDAO.checkApplicationExists(candidate, jobID);
 			
 			if(appID!=0){
@@ -86,19 +85,21 @@ public class CandidateController {
 				mav.addObject("jobID", jobID);
 				mav.setViewName("JobApplied");
 				//userDao.create(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId(),	user.getUserType());
+				//Calling Send email method from DAO
 				userDAO.sendSuccessfulMail(u, "Thanks for Applying");
 				//UserDAO.sendMail(jobId, "Your Registration has been booked successfully");
 				return mav;
 			}
 		} else {
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("Main");
-			return mv;
+			ModelAndView mav = new ModelAndView();
+			//return back to same main landing page
+			mav.setViewName("Main");
+			return mav;
 		}
 	}
 	
 	@RequestMapping(value = "/Candidate/ViewJobs.htm", method = RequestMethod.POST)
-	public ModelAndView submitForm(@RequestParam("jobTitle") String jobTitle,@RequestParam("jobLocationCity") String jobLocationCity, HttpServletRequest request) {
+	public ModelAndView searchForJob(@RequestParam("jobTitle") String jobTitle,@RequestParam("jobLocationCity") String jobLocationCity, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
@@ -107,13 +108,14 @@ public class CandidateController {
 
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("jobList", jobList);
+			System.out.println("Sending to search-result page");
 			mv.setViewName("search-result");
 			return mv;
 		} else {
-			ModelAndView mv = new ModelAndView();
+			ModelAndView mav = new ModelAndView();
 
-			mv.setViewName("Main");
-			return mv;
+			mav.setViewName("Main");
+			return mav;
 
 		}
 	}

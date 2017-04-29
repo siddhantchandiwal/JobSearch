@@ -8,6 +8,14 @@
 <title>Job Applied</title>
 </head>
 <body>
+
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Candidate") {
+    %>
 <%@include file="CandidateHeader.jsp" %>
 
 
@@ -15,5 +23,9 @@
 Congratulations!!! You have successfully applied to Job Id: ${jobID}
 
 </div>
+
+	<%
+}
+%>
 </body>
 </html>

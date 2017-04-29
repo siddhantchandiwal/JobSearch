@@ -41,19 +41,22 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/Candidate/EditProfileDetails.htm", method = RequestMethod.GET)
-	public ModelAndView editProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
+	public ModelAndView editUserProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 		if (candidate != null) {
+			System.out.println("if candidate object is not null then get details from userDAO's method");
 			Profile profile = userDAO.getProfileDetailsByID(profileID);
-
+			System.out.println("********I am Here*********");
 			ModelAndView mav = new ModelAndView();
+			System.out.println(profile.getEducationLevel());
 			mav.addObject("profileDetails", profile);
 			mav.setViewName("EditProfileDetails");
 			return mav;
 		} else {
-
+			System.out.println("Not working inside");
 			ModelAndView mav = new ModelAndView();
+			System.out.println("Re-directing to Main Page");
 			mav.setViewName("Main");
 			return mav;
 		}
@@ -61,14 +64,15 @@ public class ProfileController {
 	
 	
 	@RequestMapping(value = "/Candidate/DeleteProfileDetails.htm", method = RequestMethod.GET)
-	public ModelAndView deleteProfileDetails(@RequestParam("adID") String profileID, HttpServletRequest request) {
+	public ModelAndView deleteUserProfile(@RequestParam("adID") String profileID, HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
 		if (candidate != null) {
 			Profile profile = userDAO.getProfileDetailsByID(profileID);
-			userDAO.deleteProfileDetails(profile);
+			userDAO.deleteProfileDetails(profile); //Calling Hibernate delete methos
 			
+			System.out.println("Now inside delete profile Dao method");
 
 			List list = userDAO.getProfileDetails(candidate);
 			// return list;
@@ -123,7 +127,7 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/Candidate/ViewProfDetails.htm", method = RequestMethod.GET)
-	public ModelAndView viewProfileDetails(HttpServletRequest request) {
+	public ModelAndView viewUserProfileDetails(HttpServletRequest request) {
 
 		Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
 
@@ -143,6 +147,7 @@ public class ProfileController {
 			return mav;
 		} else {
 			ModelAndView mv = new ModelAndView();
+			System.out.println("Inside Else part now");
 			mv.setViewName("Main");
 			return mv;
 
@@ -150,7 +155,7 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/Candidate/addMoreProfileDetails.htm", method = RequestMethod.GET)
-	public String handlingCode2() {
+	public String handler() {
 		return "Main";
 
 	}
@@ -177,7 +182,7 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/Candidate/addAD.htm", method = RequestMethod.POST)
-	public ModelAndView addAcademicDetailstoDB(@ModelAttribute("profileDetails") Profile profileDetails, BindingResult result, HttpServletRequest request) {
+	public ModelAndView addAcademicDetailstoDB(Model model, @ModelAttribute("profileDetails") Profile profileDetails, BindingResult result, HttpServletRequest request) {
 		
 		
 		 
@@ -185,11 +190,13 @@ public class ProfileController {
 			if (result.hasErrors()) {
 				ModelAndView mv = new ModelAndView();
 				mv.addObject("profileDetails", profileDetails);
+				model.addAttribute("task", "failure");
 				mv.setViewName("AddProfile");
 				return mv;
 			}
 			
 			Candidate candidate = (Candidate) request.getSession().getAttribute("loggedUser");
+			//Calling add UserProfile method from userDAO
 			userDAO.addProfileDetails(profileDetails, candidate);
 			
 			
@@ -197,6 +204,10 @@ public class ProfileController {
 			List l = userDAO.getProfileDetails(candidate);
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("profileDetailsList", l);
+			//Setting identifiers to access error label
+			System.out.println("Setting label fields");
+			model.addAttribute("task", "success");
+			model.addAttribute("message", "Profile Saved Successfully");
 			mav.setViewName("ProfileSaved");
 			return mav;
 		} 

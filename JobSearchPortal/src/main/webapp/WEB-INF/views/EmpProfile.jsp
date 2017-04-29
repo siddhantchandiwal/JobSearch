@@ -26,24 +26,32 @@
 </head>
 <body>
 
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Employer") {
+    %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@include file="employerheader.jsp" %>
 
 
 <div class="container">
-  <h2>Please fill the details</h2>
+  <h2>Please update your Profile</h2>
   <form:form action="${contextPath}/Employer/EmpProfile.htm" commandName="employer" method="post" class="form-horizontal" >
     <div class="form-group">
       
      <label class="col-sm-2 control-label">FirstName</label>
       <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="orgName" path="firstName"/>
+        <form:input type="text" class="form-control" id="orgName" path="firstName" required="true"/>
       </div>
      </div>
       <div class="form-group">
      <label class="col-sm-2 control-label">Last Name:</label>
       <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="orgType" path="lastName"/>
+        <form:input type="text" class="form-control" id="orgType" path="lastName" required="true"/>
       </div>
       </div>
       
@@ -78,7 +86,9 @@
 </div>
 
 
-
+	<%
+}
+%>
 
 </body>
 </html>

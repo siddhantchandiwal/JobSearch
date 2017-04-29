@@ -41,12 +41,19 @@
   
 </head>
 <body>
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Admin") {
+    %>
 <%@include file="AdminHeader.jsp" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
     
 <div class="container">
-  <h2>Please add New Organization</h2>
+  <h2>Add New Organization</h2>
   <form:form action="${contextPath}/Admin/AddOrg.htm" commandName="organization" method="post" class="form-horizontal" >
     <div class="form-group">
       
@@ -64,7 +71,7 @@
       
  
       <div class="container">
-          <input type="submit" class="btn btn-info" value="Submit" onclick="return validate()">
+          <input type="submit" class="btn btn-info" value="Add" onclick="return validate()">
           <input type="reset" class="btn btn-info" value="Refresh">
           
       </div>
@@ -73,7 +80,10 @@
 </div>
 
     
-
+<%
+}
+%>
 
 </body>
 </html>
+

@@ -22,6 +22,8 @@ public class Profile {
 	@Column(name = "profileID", unique = true, nullable = false)
 	int profileID;
 	
+
+
 	@Column(name = "educationLevel")
 	private String educationLevel; 
 	
@@ -29,13 +31,13 @@ public class Profile {
 	private String major;
 	
 	@Column(name = "gpa")
-	private double gpa;
+	private Double gpa;
 	
 	@Column(name = "startYear")
-	private int startYear;
+	private String startYear;
 
 	@Column(name = "expYearOfGraduation")
-	private int expYearOfGraduation;
+	private String expYearOfGraduation;
 	
 	@Column(name = "universityName")
 	private String universityName;
@@ -53,10 +55,10 @@ public class Profile {
 	private String jobTitle;
 	
 	@Column(name = "annualStartPay")
-	private String annualStartPay;
+	private double annualStartPay;
 	
 	@Column(name = "annualEndPay")
-	private String annualEndPay;
+	private double annualEndPay;
 	
 	@Column(name = "companyCity")
 	private String companyCity;
@@ -95,31 +97,39 @@ public class Profile {
 		this.major = major;
 	}
 
-	public double getGpa() {
-		return gpa;
-	}
 
-	public void setGpa(double gpa) {
-		this.gpa = gpa;
-	}
 
-	public int getStartYear() {
-		return startYear;
-	}
-
-	public void setStartYear(int startYear) {
-		this.startYear = startYear;
-	}
 
 	
 
-	public int getExpYearOfGraduation() {
-		return expYearOfGraduation;
+
+	public Double getGpa() {
+		return gpa;
 	}
 
-	public void setExpYearOfGraduation(int expYearOfGraduation) {
-		this.expYearOfGraduation = expYearOfGraduation;
+	public void setGpa(Double gpa) {
+		this.gpa = gpa;
 	}
+
+	public double getAnnualStartPay() {
+		return annualStartPay;
+	}
+
+	public void setAnnualStartPay(double annualStartPay) {
+		this.annualStartPay = annualStartPay;
+	}
+
+	public double getAnnualEndPay() {
+		return annualEndPay;
+	}
+
+	public void setAnnualEndPay(double annualEndPay) {
+		this.annualEndPay = annualEndPay;
+	}
+
+
+
+
 
 	public String getUniversityName() {
 		return universityName;
@@ -169,20 +179,42 @@ public class Profile {
 		this.jobTitle = jobTitle;
 	}
 
-	public String getAnnualStartPay() {
-		return annualStartPay;
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	public String getStartYear() {
+		return startYear;
 	}
 
-	public void setAnnualStartPay(String annualStartPay) {
-		this.annualStartPay = annualStartPay;
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
 	}
 
-	public String getAnnualEndPay() {
-		return annualEndPay;
+	public String getExpYearOfGraduation() {
+		return expYearOfGraduation;
 	}
 
-	public void setAnnualEndPay(String annualEndPay) {
-		this.annualEndPay = annualEndPay;
+	public void setExpYearOfGraduation(String expYearOfGraduation) {
+		this.expYearOfGraduation = expYearOfGraduation;
+	}
+
+	public String getCompanyZipCode() {
+		return companyZipCode;
+	}
+
+	public void setCompanyZipCode(String companyZipCode) {
+		this.companyZipCode = companyZipCode;
 	}
 
 	public String getCompanyCity() {
@@ -209,13 +241,7 @@ public class Profile {
 		this.companyCountry = companyCountry;
 	}
 
-	public String getCompanyZipCode() {
-		return companyZipCode;
-	}
-
-	public void setCompanyZipCode(String companyZipCode) {
-		this.companyZipCode = companyZipCode;
-	}
+	
 	
 	
 	

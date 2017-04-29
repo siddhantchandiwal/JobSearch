@@ -79,8 +79,8 @@ public class User{
 	@Column(name = "country")
 	private String country;
 	
-	@Column(name = "zipCode")
-	private long zipCode;
+//	@Column(name = "zipCode")
+//	private long zipCode;
 	
 	@Column(name = "phone")
 	private long phone;
@@ -197,13 +197,13 @@ public class User{
 
 
 
-	public long getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(long zipCode) {
-		this.zipCode = zipCode;
-	}
+//	public long getZipCode() {
+//		return zipCode;
+//	}
+//
+//	public void setZipCode(long zipCode) {
+//		this.zipCode = zipCode;
+//	}
 
 	public long getPhone() {
 		return phone;

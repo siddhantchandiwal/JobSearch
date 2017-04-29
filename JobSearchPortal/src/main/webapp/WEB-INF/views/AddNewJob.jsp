@@ -20,13 +20,21 @@
  		var jobDescription = document.getElementsByTagName("input")[0].value;
  		var vacancies = document.getElementsByTagName("input")[1].value;
  		
- 		var regex = /^[a-zA-Z]{1,30}$/;
+ 		var regex = /^[a-zA-Z]{1,300}$/;
  		
- 		 if (!jobDescription.match(regex)|| jobDescription == null || jobDescription == "") {
- 	        alert("Not a valid Job Description");
- 	        return false;
- 	    }
- 		 
+ 		if (parseInt(vacancies) <= 0) {
+			errmsg = "*Vacancies should not be negative or zero.";
+			flag = false;
+		}else{
+			errmsg="" ;
+			flag=true;
+		}
+
+			document.getElementById("ErrorMsgForm").innerHTML = errmsg;
+		
+		return flag;
+		
+ 			 
  		 
  	}
   
@@ -35,11 +43,19 @@
 </head>
 
 <body>
+
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Employer") {
+    %>
 <%@include file="employerheader.jsp" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <div class="container">
-  <h2>Create New Jobs</h2>
+  <h2>Create New Job</h2>
   <form:form action="${contextPath}/Employer/AddNewJob.htm" commandName="job" method="post" class="form-horizontal" >
   <div class="form-group">
     <label class="col-sm-2 control-label">Job Title:</label>
@@ -144,7 +160,7 @@
       <div class="form-group">
      <label class="col-sm-2 control-label">No of Vacancies</label>
       <div class="col-sm-10">
-        <form:input type="text" class="form-control" id="vacancies" path="vacancies" name="vacancies"/>
+        <form:input type="number" class="form-control" id="vacancies" path="vacancies" name="vacancies" required = "true"/>
       </div>
       </div>
       
@@ -160,10 +176,16 @@
       </div>
     </div>
     </div>
+    
+                        <p>
+						<label id="ErrorMsgForm" class="control-label" style="color:red;" ></label>
+						</p>
      </form:form>
 </div>
 
-
+<%
+}
+%>
 
 
 </body>

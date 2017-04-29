@@ -18,6 +18,14 @@
 </head>
 <body>
 
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Admin") {
+    %>
+
 <%@include file="AdminHeader.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <h1>Welcome Admin</h1>
@@ -58,7 +66,10 @@
 </form:form>
 <a href="${contextPath}/Admin/ViewEmpListinPDF.pdf">View List in PDF</a>
 
-
+<%
+}
+%>
 
 </body>
 </html>
+

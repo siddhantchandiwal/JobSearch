@@ -22,6 +22,10 @@
 
 </head>
 <body>
+
+
+
+
 	<%@include file="CandidateHeader.jsp"%>
 	<div class="container">
 		<div class="row">

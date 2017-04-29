@@ -9,12 +9,14 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Message;
 
+
 import org.codemonkey.simplejavamail.Email;
 import org.codemonkey.simplejavamail.Mailer;
 import org.codemonkey.simplejavamail.TransportStrategy;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import org.springframework.stereotype.Component;
@@ -40,7 +42,7 @@ public class UserDAO extends DAO{
 		   String name = fname.concat(lname);
 		   Email email = new Email();
 
-			email.setFromAddress("Online Job Search Portal", "donotreply.coalition@gmail.com");
+			email.setFromAddress("Online Job Search Portal", "chandiwalsiddhant@gmail.com");
 			email.setSubject("Welcome Letter!");
 
 			email.addRecipient(name,user.getEmailId(), Message.RecipientType.TO);
@@ -49,12 +51,12 @@ public class UserDAO extends DAO{
 			sb.append("\n");
 			sb.append("\n");
 			sb.append("Thank you for taking out time and your interest in Online Job Search Portal");
-			
+			sb.append("\n");
 			sb.append("\n");
 			
 			System.out.println("user id "+user.getEmailId());
 			email.setText(sb.toString());
-			new Mailer("smtp.gmail.com", 465, "donotreply.coalition@gmail.com", "Mh14eu7295",
+			new Mailer("smtp.gmail.com", 465, "chandiwalsiddhant@gmail.com", "Mh14eu7295",
 					TransportStrategy.SMTP_SSL).sendMail(email);
 			System.out.println("Sent message successfully....");
 		}
@@ -70,7 +72,7 @@ public class UserDAO extends DAO{
 		   String name = fname.concat(lname);
 		   Email email = new Email();
 
-			email.setFromAddress("Online Job Search Portal", "donotreply.coalition@gmail.com");
+			email.setFromAddress("Online Job Search Portal", "chandiwalsiddhant@gmail.com");
 			email.setSubject("Thanks for Applying!");
 
 			email.addRecipient(name,user.getEmailId(), Message.RecipientType.TO);
@@ -86,7 +88,7 @@ public class UserDAO extends DAO{
 			
 			System.out.println("user id "+user.getEmailId());
 			email.setText(sb.toString());
-			new Mailer("smtp.gmail.com", 465, "donotreply.coalition@gmail.com", "Mh14eu7295",
+			new Mailer("smtp.gmail.com", 465, "chandiwalsiddhant@gmail.com", "Mh14eu7295",
 					TransportStrategy.SMTP_SSL).sendMail(email);
 			System.out.println("Sent message successfully....");
 		}
@@ -230,8 +232,8 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void editProfileDetails(int profileID, String educationLevel, String major, Double gpa, int startYear, int expYearOfGraduation, 
-			String universityName, String universityAddress, String companyName, String companyType, String jobTitle, String annualStartPay, String annualEndPay, 
+	public void editProfileDetails(int profileID, String educationLevel, String major, Double gpa, String startYear, String expYearOfGraduation, 
+			String universityName, String universityAddress, String companyName, String companyType, String jobTitle, Double annualStartPay, Double annualEndPay, 
 			String companyCity, String companyState, String companyCountry, String companyZipCode) {
 		// TODO Auto-generated method stub
 
@@ -247,15 +249,15 @@ public class UserDAO extends DAO{
 			query.setString("educationLevel", educationLevel);
 			query.setString("major", major);
 			query.setDouble("gpa", gpa);
-			query.setInteger("startYear", startYear);
-			query.setInteger("expYearOfGraduation", expYearOfGraduation);
+			query.setString("startYear", startYear);
+			query.setString("expYearOfGraduation", expYearOfGraduation);
 			query.setString("universityName", universityName);
 			query.setString("universityAddress", universityAddress);
 			query.setString("companyName", companyName);
 			query.setString("companyType", companyType);
 			query.setString("jobTitle", jobTitle);
-			query.setString("annualStartPay", annualStartPay);
-			query.setString("annualEndPay", annualEndPay);
+			query.setDouble("annualStartPay", annualStartPay);
+			query.setDouble("annualEndPay", annualEndPay);
 			query.setString("companyCity", companyCity);
 			query.setString("companyState", companyState);
 			query.setString("companyCountry", companyCountry);
@@ -380,6 +382,41 @@ public class UserDAO extends DAO{
 	
 	
 	
+	/*public Boolean checkusername(String userName){
+        try{Session s = getSession();
+        System.out.println(userName);
+        Query query= s.createQuery("from User where userName= :userName");
+        query.setString("userName", userName);
+        List result = query.list();
+        System.out.println("Size"+result.size());
+    
+        if(result.size()>0){
+            return true;    
+        }else{
+            return false;
+        }}catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+	
+	public Boolean checkemail(String emailId){
+        Session s = getSession();
+        System.out.println(emailId);
+        Query query= s.createQuery("from User where emailId= :emailId");
+        query.setString("emailId", emailId);
+        List result = query.list();
+    
+        if(result.size()>0){
+            return true;    
+        }else{
+            return false;
+        }
+            }
+	
+	*/
+	
+	
 	public void updatePersonalInfo(User user) {
 		// TODO Auto-generated method stub
 
@@ -398,13 +435,13 @@ public class UserDAO extends DAO{
 
 	}
 	
-	public void updatePersonalInfo(int userID, String streetLine1, String streetLine2, String city, String state, String country, String emailId, long phone, long zipCode) {
+	public void updatePersonalInfo(int userID, String streetLine1, String streetLine2, String city, String state, String country, String emailId, long phone) {
 		// TODO Auto-generated method stub
 
 		try {
 			begin();
 			Query u = getSession().createQuery("update User set streetLine1 = :streetLine1,streetLine2=:streetLine2,"
-					+ "city=:city,state=:state,country=:country,emailId=:emailId,phone=:phone,zipCode=:zipCode where userId = :userId");
+					+ "city=:city,state=:state,country=:country,emailId=:emailId,phone=:phone where userId = :userId");
 			System.out.println("??????????????????????????"+userID);
 			u.setInteger("userId", userID);
 			u.setString("streetLine1",streetLine1);
@@ -414,7 +451,7 @@ public class UserDAO extends DAO{
 			u.setString("country",country);
 			u.setString("emailId",emailId);
 			u.setLong("phone",phone);
-			u.setLong("zipCode",zipCode);
+			//u.setLong("zipCode",zipCode);
 			u.executeUpdate();
 			commit();
 			close();

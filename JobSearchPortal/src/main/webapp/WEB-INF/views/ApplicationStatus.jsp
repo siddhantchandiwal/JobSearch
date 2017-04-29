@@ -22,6 +22,8 @@
 
 </head>
 <body>
+
+
 	<%@include file="CandidateHeader.jsp"%>
 
 
@@ -31,12 +33,14 @@
 		<tr>
 			<td><b>Number</b></td>
 			<td><b>Application ID</b></td>
+			<td><b>Company Name</b></td>
 			<td><b>Job Title</b></td>
 			<td><b>Qualification</b></td>
 			<td><b>City</b></td>
 			<td><b>State</b></td>
 			<td><b>Country</b></td>
 			<td><b>Application Status</b></td>
+			
 		</tr>
 		
 		<tbody>
@@ -47,12 +51,14 @@
 
 							<td><%=count++%></td>
 							<td>${jobApp.jobApplicationID}
+							<td>${jobApp.job.organization.organizationName}
 							<td>${jobApp.job.jobTitle}
 							<td>${jobApp.job.qualification}
 							<td>${jobApp.job.jobLocationCity}
 							<td>${jobApp.job.jobLocationState}
 							<td>${jobApp.job.jobLocationCountry}
-							<td>${jobApp.currentJobStatus }</td>
+							<td>${jobApp.currentJobStatus}
+							</td>
 													</tr>
 
 					</c:forEach>
@@ -60,6 +66,9 @@
 	</table>
 		</div>
 	</div>
+	
+	
+
 </body>
 </html>
 

@@ -25,6 +25,7 @@
     <ul class="nav navbar-nav">
         <li class="active"><a href="EmpProfile.htm">My Profile</a></li>
       <li class ="active"><a href="AddNewJob.htm">Add Jobs</a></li>
+      <li class ="active"><a href="CheckStatus.htm">Check Status</a></li>
       
         
      

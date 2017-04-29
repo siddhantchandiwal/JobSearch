@@ -25,10 +25,12 @@
 		var errmsg="";
 		letter = /^[A-Za-z]*$/;
 		emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})*$/;
+		anotherletter=/^[0-9]{1,10}$/;
 		
 		var firstName = document.getElementById("firstName").value;
 		var lastName = document.getElementById("lastName").value;	
 		var email = document.getElementById("emailId").value;
+		var phone = document.getElementById("phone").value;
 		
 		
 		if (!letter.test(firstName)) {
@@ -46,8 +48,11 @@
 		}else if (lastName == ""|| lastName==null) {
 			errmsg = "*Last Name cannot be kept blank";
 			flag = false;
+		}else if (!anotherletter.test(phone)) {
+			errmsg="*Please enter Correct Phone Number";  
+			flag = false;
 		}else{
-			errmsg=true;
+			errmsg=" ";
 		}
 			document.getElementById("Error").innerHTML = errmsg;
 		
@@ -58,6 +63,14 @@
 
 </head>
 <body ng-controller="myCTRL">
+
+<%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+            String role = (String) session.getAttribute("role");
+            if (role == "Candidate") {
+    %>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 	<%@include file="CandidateHeader.jsp"%>
 
@@ -70,10 +83,10 @@
 
 					<form:form action="${contextPath}/Candidate/UserProfile.htm"
 						commandName="user" method="post" class="form-horizontal"
-						role="form" onsubmit="return validate()">
+						role="form" onsubmit="return validate();">
 
 
-						<h3 align="center">User Profile</h3>
+						<h3 align="center">Update Personal Information</h3>
 						<div class="form-group">
 							<input type="hidden" name="ID" value="${user.userId}" /> <label
 								for="firstName" class="col-sm-3 control-label">First
@@ -101,7 +114,7 @@
 						<div class="form-group">
 							<label for="emailId" class="col-sm-3 control-label">Email</label>
 							<div class="col-sm-9">
-								<form:input type="text" id="emailId" placeholder="Email Id"
+								<form:input type="email" id="emailId" placeholder="Email Id"
 									path="emailId" class="form-control" />
 								<form:errors path="emailId" cssStyle="color:#ff0000"></form:errors>
 							</div>
@@ -167,11 +180,12 @@
 							<label for="phone" class="col-sm-3 control-label">Phone
 								Number</label>
 							<div class="col-sm-9">
-								<form:input type="text" id="phone" placeholder="Phone Number"
-									path="phone" class="form-control" />
+								<form:input type="number" id="phone" placeholder="Phone Number"
+									path="phone" class="form-control" required = "true"/>
 								<form:errors path="phone" cssStyle="color:#ff0000"></form:errors>
 							</div>
 						</div>
+						
 
 
 						<div class="form-group">
@@ -190,5 +204,10 @@
 				</div>
 				<!-- /form -->
 			</div>
+			
+			<%
+}
+%>
 </body>
 </html>
+

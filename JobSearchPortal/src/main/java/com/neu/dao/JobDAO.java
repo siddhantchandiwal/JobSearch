@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import com.neu.pojo.Candidate;
+import com.neu.pojo.Employer;
 import com.neu.pojo.Job;
 import com.neu.pojo.JobApp;
 import com.neu.pojo.JobStatus;
@@ -101,6 +102,19 @@ public class JobDAO extends DAO{
 			rollback();
 
 		}
+	}
+	
+	public List<JobApp> getAll(Employer employer) {
+		System.out.println("Inside jobApp Dao method");
+		Organization organization = employer.getOrganization();
+		Criteria c = getSession().createCriteria(JobApp.class);
+		Criteria jobCriteria = c.createCriteria("job");
+		Criteria orgCriteria = jobCriteria.createCriteria("organization");
+		orgCriteria.add(Restrictions.eq("organizationID", organization.getOrganizationID()));
+		List<JobApp> list = c.list();
+		System.out.println("Done with Dao method");
+		return list;
+
 	}
 	
 	public Job getJobByID(String jobID) {
